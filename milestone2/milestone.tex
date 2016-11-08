@@ -21,6 +21,8 @@
 \usepackage{microtype}      % microtypography
 \usepackage{amsmath}
 \usepackage{cleveref}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algorithmic}
 \newcommand{\vect}{\text{vec}}
 \newcommand{\diag}{\text{diag}}
 \newcommand{\rank}{\text{rank}}
@@ -104,7 +106,7 @@ Factorization machines were proposed in \cite{FM_paper}, which has been used hea
 
 The goal of the project is to explore the optimization method for FMs, cFMs, and gFMs in regression setting with squared error loss as criteria, see \Cref{eq:criteria},
 \begin{align}
-  L(w_0, w, V)/L(w_0, w, W) = \sum_{i = 1}^n (y^i - \hat{y}(x^i, w_0, w, V)^2 \label{eq:criteria}
+  L(w_0, w, V)/L(w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (y^i - \hat{y}(x^i, w_0, w, V)^2 \label{eq:criteria}
 \end{align}
 
 with various smooth and non-smooth regularizations on $w$, $V$ and $W$ (depends on the formalization) in regression case. Here, we define FMs with the form in \Cref{eq:fm}. And we consider the following regularizations on $w$: i) $\|w\|_2^2$; ii) $\|w\|_1$; iii) $\|\vecc(V)\|_2^2$. 
@@ -141,14 +143,55 @@ And the proximal operator of $\|w\|_1$ is the basic soft-thresholding function:
   x_i + t & \text{, if $x_i < -t$}
   \end{cases}
 \end{align*}
-Since the only non-smooth term is $\|w\|_1$, then we can optimize the criteria $L(w_0, w, V)$ with proximal gradient descent and accelerated proximal method. Besides these, we plan to try method with superlinear convergence, i.e. Newton’s method and quasi-Newton method. The hessian of loss function is:
-\begin{align*}
-  \frac{\partial^2 \|\hat{y} - y\|_2^2}{\partial u_i \partial u_j} &= 2(\hat{y} - y) \frac{\partial^2 \hat{y}}{\partial u_i \partial u_j} + 2 \frac{\partial \hat{y}}{\partial u_i}\frac{\partial \hat{y}}{\partial u_j} \\
-  & \text{, where $u_i, u_j$ are elements of $w_0, w, V$}
-\end{align*}
-Then the only term contributes to $\nabla^2 \hat{y}$ is $\nabla^2_{V_i, V_j} = \diag(\textbf{1}x_i x_j)$. But $\nabla^2 L$ is $(kp+p+1)$-by-$(kp+p+1)$ matrix, which is expensive to invert when $p$ is large. Alternatively, we plan to try L-BFGS method to achieve better convergence rate but with less computational cost than Newton's method.
+Since the only non-smooth term is $\|w\|_1$, then we can optimize the criteria $L(w_0, w, V)$ with proximal gradient descent and accelerated proximal method. 
+
+% Besides these, we plan to try method with superlinear convergence, i.e. quasi-Newton method. The hessian of loss function is:
+% \begin{align*}
+%   \frac{\partial^2 \|\hat{y} - y\|_2^2}{\partial u_i \partial u_j} &= 2(\hat{y} - y) \frac{\partial^2 \hat{y}}{\partial u_i \partial u_j} + 2 \frac{\partial \hat{y}}{\partial u_i}\frac{\partial \hat{y}}{\partial u_j} \\
+%   & \text{, where $u_i, u_j$ are elements of $w_0, w, V$}
+% \end{align*}
+% Then the only term contributes to $\nabla^2 \hat{y}$ is $\nabla^2_{V_i, V_j} = \diag(\textbf{1}x_i x_j)$. But $\nabla^2 L$ is $(kp+p+1)$-by-$(kp+p+1)$ matrix, which is expensive to invert when $p$ is large. Alternatively, we plan to try L-BFGS method to achieve better convergence rate but with less computational cost than Newton's method.
 
 \subsection{Solving cFMs}
+
+Beyond trace norm penalty on $W$, the introduction of non-smooth sparsity constraint makes the whole algorithm described above fail. We plan to apply subgradient method as baseline method and test the performance of augmented Lagrange Multiplier method on this problem. Here, the optimization problem we consider is the following:
+\begin{align}
+  &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(W)\|_1 \label{eq:cfm}
+  % & \text{where }  L(x, w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (w_0 + w^T x^i + x^{iT}  W x^i 
+\end{align}
+Since every term in the objective is convex, from the additive property of subgradient operator, a subgradient (let’s use $\partial f$ to denote a subgradient of $f$) of objective is given by the following quantities:
+\begin{align}
+  \partial_{W_{ij}} \|\vecc(W)\|_1 &= \begin{cases}
+    1 & \text{, if $W_{ij} < 0$} \nonumber \\
+    -1 & \text{, if $W_{ij} > 0$} \nonumber \\
+    0 & \text{, otherwise} 
+\end{cases} \\
+  \partial_{W} \|W\|_{\tr} &= U^TV \nonumber \\
+  & \text{, where $U, V$ is given by $W = U^T \Sigma V$} \nonumber
+\end{align}
+\cite{li2015conformal} solved the problem with both trace norm and $l_1$ penaly by augmented Lagrange multipliers (ALM), which is widely used for matrix completion problem and robust PCA \cite{lin2010augmented}. Inspired by their work, we can reformalize \cref{eq:cfm} as follow:
+\begin{align}
+  &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 \label{eq:cfm_alm} \\
+  & \text{subject to }\quad W - P = 0
+\end{align}
+The Lagrange multiplier is:
+\begin{align}
+  \mathcal{L}(w_0, w, W, P) &= L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 \nonumber \\
+  &+ \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 + \langle Y, W - P \rangle + \frac{\mu}{2} \|\vecc(Y - (W - P))\|_2^2 \label{eq:alm}
+\end{align}
+, where $Y$ is Lagrange multiplier. Then we can apply general ALM algorithm proposed in \cite{lin2010augmented} as stated in \cref{algo:alm}. Intuitively, $\mu_k$ can be seen as a parameter penalizing on the difference between $W$ and $P$, which pushes the equality constraint to be satisfied as $\mu$ increases. In practice, we can geometrically increase $\mu$. Then, every time solving the subproblem in while loop, we can use the previous solution as warm start. 
+\begin{algorithm} 
+  \caption{ALM method solving \cref{eq:cfm_alm}}
+  \label{algo:alm}
+  \begin{algorithmic}[1]
+    \STATE $\mu_0 > 0$
+    \WHILE{not converge}
+      \STATE solve $\arg\min \mathcal{L}(w_0, w, W, P)$ for $w_{0,k}, w_k, W_k, P_k$ 
+      \STATE $Y_{k + 1} \leftarrow Y_{k} + \mu_k (W_k - P_k)$
+      \STATE Update $\mu_k$ to $\mu_{k+1}$
+    \ENDWHILE
+  \end{algorithmic}
+\end{algorithm}
 
 
 
