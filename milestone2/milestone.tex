@@ -183,7 +183,7 @@ Additionally, by combining subgradient and proximal method, we can use the follo
 The Lagrangian is:
 \begin{align}
   \mathcal{L}(w_0, w, W, P, Y, \mu) &= L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 \nonumber \\
-  &+ \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 + \langle Y, W - P \rangle + \frac{\mu}{2} \|\vecc(Y - (W - P))\|_2^2 \label{eq:alm}
+  &+ \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 + \langle Y, W - P \rangle + \frac{\mu}{2} \|\vecc(W - P)\|_2^2 \label{eq:alm}
 \end{align}
 , where $Y$ is Lagrange multiplier. Then we can apply general ALM algorithm proposed in \cite{lin2010augmented} as stated in \cref{algo:alm}. Intuitively, $\mu^k$ can be seen as a parameter penalizing on the difference between $W$ and $P$, which pushes the equality constraint to be satisfied as $\mu$ increases. In practice, we can increase $\mu^k$ geometrically (say with factor $\rho > 0$) and every time solving the subproblem in while loop, we use the previous solution as warm start.
 \begin{algorithm} 
