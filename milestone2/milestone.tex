@@ -106,7 +106,7 @@ Factorization machines were proposed in \cite{FM_paper}, which has been used hea
 
 The goal of the project is to explore the optimization method for FMs, cFMs, and gFMs in regression setting with squared error loss as criteria, see \Cref{eq:criteria},
 \begin{align}
-  L(w_0, w, V)/L(w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (y^i - \hat{y}(x^i, w_0, w, V)^2 \label{eq:criteria}
+  L(w_0, w, V)/L(w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (y^i - \hat{y}(x^i, w_0, w, V/W))^2 \label{eq:criteria}
 \end{align}
 
 with various smooth and non-smooth regularizations on $w$, $V$ and $W$ (depends on the formalization) in regression case. Here, we define FMs with the form in \Cref{eq:fm}. And we consider the following regularizations on $w$: i) $\|w\|_2^2$; ii) $\|w\|_1$; iii) $\|\vecc(V)\|_2^2$. 
@@ -166,29 +166,36 @@ Since every term in the objective is convex, from the additive property of subgr
     -1 & \text{, if $W_{ij} > 0$} \nonumber \\
     0 & \text{, otherwise} 
 \end{cases} \\
-  \partial_{W} \|W\|_{\tr} &= U^TV \nonumber \\
+  \partial \|W\|_{\tr} &= U^TV \nonumber \\
   & \text{, where $U, V$ is given by $W = U^T \Sigma V$} \nonumber
 \end{align}
-\cite{li2015conformal} solved the problem with both trace norm and $l_1$ penaly by augmented Lagrange multipliers (ALM), which is widely used for matrix completion problem and robust PCA \cite{lin2010augmented}. Inspired by their work, we can reformalize \cref{eq:cfm} as follow:
+Additionally, by combining subgradient and proximal method, we can use the following iterator to update $W$:
+\begin{align*}
+  W^k \leftarrow \prox_{\|\vecc(W)\|_1, t_k}(W^{k-1} -t_k (\nabla_W L^k + \partial \|W^k\|_{\tr}))
+\end{align*}
+, where $t_k$ can be set as $\frac{1}{k}$.
+
+\cite{li2015conformal} solved the problem with both trace norm and $l_1$ penaly by augmented Lagrange multipliers (ALM), which was used in \cite{lin2010augmented} to solve matrix completion problem and robust PCA. Inspired by their works, we can reformalize \cref{eq:cfm} as follow:
 \begin{align}
   &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 \label{eq:cfm_alm} \\
   & \text{subject to }\quad W - P = 0
 \end{align}
-The Lagrange multiplier is:
+The Lagrangian is:
 \begin{align}
-  \mathcal{L}(w_0, w, W, P) &= L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 \nonumber \\
+  \mathcal{L}(w_0, w, W, P, Y, \mu) &= L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 \nonumber \\
   &+ \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 + \langle Y, W - P \rangle + \frac{\mu}{2} \|\vecc(Y - (W - P))\|_2^2 \label{eq:alm}
 \end{align}
-, where $Y$ is Lagrange multiplier. Then we can apply general ALM algorithm proposed in \cite{lin2010augmented} as stated in \cref{algo:alm}. Intuitively, $\mu_k$ can be seen as a parameter penalizing on the difference between $W$ and $P$, which pushes the equality constraint to be satisfied as $\mu$ increases. In practice, we can geometrically increase $\mu$. Then, every time solving the subproblem in while loop, we can use the previous solution as warm start. 
+, where $Y$ is Lagrange multiplier. Then we can apply general ALM algorithm proposed in \cite{lin2010augmented} as stated in \cref{algo:alm}. Intuitively, $\mu^k$ can be seen as a parameter penalizing on the difference between $W$ and $P$, which pushes the equality constraint to be satisfied as $\mu$ increases. In practice, we can increase $\mu^k$ geometrically (say with factor $\rho > 0$) and every time solving the subproblem in while loop, we use the previous solution as warm start.
 \begin{algorithm} 
   \caption{ALM method solving \cref{eq:cfm_alm}}
   \label{algo:alm}
   \begin{algorithmic}[1]
     \STATE $\mu_0 > 0$
     \WHILE{not converge}
-      \STATE solve $\arg\min \mathcal{L}(w_0, w, W, P)$ for $w_{0,k}, w_k, W_k, P_k$ 
-      \STATE $Y_{k + 1} \leftarrow Y_{k} + \mu_k (W_k - P_k)$
-      \STATE Update $\mu_k$ to $\mu_{k+1}$
+      \STATE solve $\arg\min \mathcal{L}(w_0, w, W^{k-1}, P, Y^k, \mu^k)$ for $w_{0}^k, w^k, P^k$
+      \STATE solve $\arg\min \mathcal{L}(w_{0}^k, w^k, W, P^k, Y^k, \mu^k)$ for $W^k$
+      \STATE $Y_{k + 1} \leftarrow Y^{k} + \mu^k (W^k - P^k)$
+      \STATE Update $\mu^k$ to $\mu^{k+1}$
     \ENDWHILE
   \end{algorithmic}
 \end{algorithm}
