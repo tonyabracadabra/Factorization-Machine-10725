@@ -277,7 +277,26 @@ h_3^{(t)}\overset{\Delta}{=}\frac{1}{n}X^{(t)}\left(y-\mathcal{A}(M^{(t)})-{X^{(
 
 \section{Plan}
  
-We plan to implement all problems stated above, with different formalization or different regularization terms, and test their performance on both synthetic data and real, complicated datasets like movielens 100k, 1M, 2M etc. To explore the pros/cons of each specific formalization, we would like to test their prediction accruracy on the synthetic data, where we may consider cases such as sparse input $x$, sparse first order effect $w$ and sparse interaction term $W$. Then, we plan to apply them on a real data set provided by \cite{FM_paper}. Finally, we might want to apply our algorithm in one of the ongoing Kaggle competition \textit{Santander Product Recommendation}.
+We plan to implement the problems stated above, with different formalizations or regularization terms. After implementation, we plan to test their performance on synthetic data first. Specifically, we plan to explore the performance of alogrithm in two scenarios: i) $n > p$; ii) $n < p$. And for each case, we further explore the cases where: i) $x$ is sparse for; ii) $w$ is sparse; iii) $V/W$ is sparse. For the choosing of $p$, we plan to use $p = 1000$, which is not computationally intensive, but is still within a practical scale of several real data sets. Based on synthetic data, we would like to do an empirical analysis of the performance of each alogrithm under differently structured data and give an empirical answer about whether advanced regularizer is necessary for factorization machine and under which scenario it is helpful or harmful.
+
+Beyond testing our codes using synthetic data, we plan to apply them to real, complicated datasets like movielens with $p$ equals to 100k, 1M, 2M etc. Furthermore, we would like to apply our algorithm in one of the ongoing Kaggle competition \textit{Santander Product Recommendation}.
+
+The partition of the tasks is listed below:
+\begin{enumerate}
+  \item Implementation:
+    \begin{itemize}
+      \item FMs: Yanyu Liang
+      \item cFMs: Xin Lu \& Yanyu Liang
+      \item gFMs: Xupeng Tong
+    \end{itemize}
+  \item Data acquirment:
+    \begin{itemize}
+      \item Synthetic data: Yanyu Liang \& Xin Lu
+      \item Real data sets: Xupeng Tong
+    \end{itemize}
+  \item Empirical analysis: Xin Lu \& Yanyu Liang
+  \item Real data testing: Xupeng Tong
+\end{enumerate}
 
 
 \section*{References}
