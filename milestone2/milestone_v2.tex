@@ -238,17 +238,13 @@ The Lagrangian is:
 \subsection{Solving gFMs}
  
  
-Recently, a more generalized version of FM named gFM is proposed with removal of several redundant constraints compared to the original FM, while its learning ability is kept.
- 
- 
+Recall that gFM proposed by \cite{generalizedFM_paper} removes several redundant constraints compared to the original FM, while its learning ability is kept. Let's reform $\hat{y}$ in gFMs as follow:
 \begin{align}
-y=X^Tw^*+\mathcal{A}(U^TV)+\xi \label{eq:one_pass_gfm}
+\hat{y}=X^Tw^*+\mathcal{A}(U^TV)+\xi \label{eq:one_pass_gfm}
 \end{align}
- 
- 
-Denote the linear operator $$
+, where $w^*$ combines $w_0, w$ and we add an extra $1$ in $x$ for bias term. And note that $\mathcal{A}$ is the linear operator:$$
 \mathcal{A} : \mathbb{R}^{p\times p} \rightarrow \mathbb{R} \\$$ $$ \mathcal{A}(M) \overset{\Delta}{=} \left[\langle A_1, M_1\rangle,\langle A_2, M\rangle, M, \cdots ,\langle A_n, M\rangle\right]^T$$
-where $Ai = x_ix_i^T$
+where $A_i = x_ix_i^T$
  
  
 Specifically, we plan to use the one-pass gFM algorithm proposed by the author in solving this problem.
