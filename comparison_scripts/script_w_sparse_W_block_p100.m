@@ -2,7 +2,7 @@
 addpath(genpath('../cFM_proximal/'));
 addpath(genpath('../yanyu_code'));
 %% data - script_w_sparse_W_block & p = 100
-datatype = 'script_w_sparse_W_block';
+datatype = 'w_sparse_W_block';
 nmethods = 3;
 p = 100;
 % test_mse = zeros(5,nmethods);
