@@ -4,14 +4,11 @@
 %% project: Factorization Machines
 %% Task: Model 1 - classic FMs
 %% Description: 
-%  L = |y - \hat{y}|^2 + lambda1 * |w|_2^2 + lambda2 * |w|_1
-%  \hat{y} = w0 + w' * x + x * W * x'
+%  L = |y - \hat{y}|^2 + lambda1 * |w|_2^2 + lambda2 * |w|_1 + lambda3 * |vec(V)|_2^2
+%  \hat{y} = w0 + w' * x + x' * V' * V * x
 %% Algorithms:
 %  1. gradient descent
 %  2. proximal descent
-%  3. Newton's method
-%  4. primal-dual method
-%  5. Quasi-Newton method
 %% Limitation:
 %  1. TBA
 %% Memo:
@@ -31,7 +28,8 @@ function m1 = optimize_model1
     m1.proximal_descent_acc = @m1_proximal_descent_acc;
 end
 
-function [w0, w, V, W, objs] = m1_gradient_descent(x, y, lambda1, lambda2, w0_init, w_init, V_init, tol, tmax, lina, linb, maxstep)
+function [w0, w, V, W, objs] = m1_gradient_descent(x, y, lambda1, lambda2, lambda3, w0_init, w_init, V_init, tol, tmax, lina, linb, maxstep)
+    disp('classic FMs - gradient descent: lambda2 is ignored');
     w0 = w0_init;
     w = w_init;
     V = V_init;
@@ -48,7 +46,7 @@ function [w0, w, V, W, objs] = m1_gradient_descent(x, y, lambda1, lambda2, w0_in
     while delta > tol && step_counter < maxstep
         grad_w0 = -c_grad_w0(y, y_hat);
         grad_w = -c_grad_w(y, y_hat, x);
-        grad_V = -c_grad_V(y, y_hat, x, V);
+        grad_V = -c_grad_V(y, y_hat, x, V) - 2 * lambda3 * V;
         v_length = vlength(grad_w0, grad_w, grad_V);
         inner_counter = inner_counter + 1;
         
@@ -78,7 +76,8 @@ function [w0, w, V, W, objs] = m1_gradient_descent(x, y, lambda1, lambda2, w0_in
     W = V' * V;
 end
 
-function [w0, w, V, W, objs] = m1_gradient_descent_acc(x, y, lambda1, lambda2, w0_init, w_init, V_init, tol, tk, lina, linb, maxstep)
+function [w0, w, V, W, objs] = m1_gradient_descent_acc(x, y, lambda1, lambda2, lambda3, w0_init, w_init, V_init, tol, tk, lina, linb, maxstep)
+    disp('classic FMs - gradient descent accelerated: lambda2 is ignored');
     w0 = w0_init;
     w = w_init;
     V = V_init;
@@ -99,7 +98,7 @@ function [w0, w, V, W, objs] = m1_gradient_descent_acc(x, y, lambda1, lambda2, w
         
         grad_w0 = -c_grad_w0(y, y_hat);
         grad_w = -c_grad_w(y, y_hat, x);
-        grad_V = -c_grad_V(y, y_hat, x, inter_v_V);
+        grad_V = -c_grad_V(y, y_hat, x, inter_v_V) - 2 * lambda3 * V;
         
         w0_km2 = w0;
         w_km2 = w;
@@ -117,7 +116,8 @@ function [w0, w, V, W, objs] = m1_gradient_descent_acc(x, y, lambda1, lambda2, w
     W = V' * V;
 end
 
-function [w0, w, V, W, objs] = m1_gradient_descent_noback(x, y, lambda1, lambda2, w0_init, w_init, V_init, tol, t, lina, linb, maxstep)
+function [w0, w, V, W, objs] = m1_gradient_descent_noback(x, y, lambda1, lambda2, lambda3, w0_init, w_init, V_init, tol, t, lina, linb, maxstep)
+    disp('classic FMs - gradient descent no backtracking: lambda2 is ignored');
     w0 = w0_init;
     w = w_init;
     V = V_init;
@@ -133,7 +133,7 @@ function [w0, w, V, W, objs] = m1_gradient_descent_noback(x, y, lambda1, lambda2
     while delta > tol && step_counter < maxstep
         grad_w0 = -c_grad_w0(y, y_hat);
         grad_w = -c_grad_w(y, y_hat, x);
-        grad_V = -c_grad_V(y, y_hat, x, V);
+        grad_V = -c_grad_V(y, y_hat, x, V) - 2 * lambda3 * V;
         
         w0_temp = w0 + t * grad_w0;
         w_temp = w + t * grad_w;
@@ -151,7 +151,8 @@ function [w0, w, V, W, objs] = m1_gradient_descent_noback(x, y, lambda1, lambda2
     W = V' * V;
 end
 
-function [w0, w, V, W, objs] = m1_proximal_descent(x, y, lambda1, lambda2, w0_init, w_init, V_init, tol, tmax, lina, linb, maxstep)
+function [w0, w, V, W, objs] = m1_proximal_descent(x, y, lambda1, lambda2, lambda3, w0_init, w_init, V_init, tol, tmax, lina, linb, maxstep)
+    disp('classic FMs - proximal gradient descent');
     w0 = w0_init;
     w = w_init;
     V = V_init;
@@ -170,7 +171,7 @@ function [w0, w, V, W, objs] = m1_proximal_descent(x, y, lambda1, lambda2, w0_in
         
         grad_w0 = -c_grad_w0(y, y_hat);
         grad_w = -c_grad_w(y, y_hat, x);
-        grad_V = -c_grad_V(y, y_hat, x, V);
+        grad_V = -c_grad_V(y, y_hat, x, V) - 2 * lambda3 * V;
         
         inner_counter = inner_counter + 1;
         g = squared_error_loss(y, y_hat) + l2(w, lambda1);
@@ -204,7 +205,8 @@ function [w0, w, V, W, objs] = m1_proximal_descent(x, y, lambda1, lambda2, w0_in
     W = V' * V;
 end
 
-function [w0, w, V, W, objs] = m1_proximal_descent_acc(x, y, lambda1, lambda2, w0_init, w_init, V_init, tol, tk, lina, linb, maxstep)
+function [w0, w, V, W, objs] = m1_proximal_descent_acc(x, y, lambda1, lambda2, lambda3, w0_init, w_init, V_init, tol, tk, lina, linb, maxstep)
+    disp('classic FMs - proximal gradient descent accelerated');
     w0 = w0_init;
     w = w_init;
     V = V_init;
@@ -231,7 +233,7 @@ function [w0, w, V, W, objs] = m1_proximal_descent_acc(x, y, lambda1, lambda2, w
         
         grad_w0 = -c_grad_w0(y, y_hat);
         grad_w = -c_grad_w(y, y_hat, x);
-        grad_V = -c_grad_V(y, y_hat, x, inter_v_V);
+        grad_V = -c_grad_V(y, y_hat, x, inter_v_V) - 2 * lambda3 * V;
         
         w0_km2 = w0;
         w_km2 = w;
