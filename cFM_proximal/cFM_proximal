@@ -1,0 +1,37 @@
+X=[
+23, 4, 53, 43;
+35, 55, 235, 663;
+4, 5, 63, 2
+];
+y=[
+1;
+2;
+3
+];
+
+[n,p]=size(X);
+w=ones(p,1);
+Z=ones(p,p);
+
+alpha=1; %%% parameter ???????
+beta=1;
+epsilon=1e-5;
+
+f_pre=f(y,X,w,Z,alpha,beta)
+
+ff=[];
+
+while true
+    %gradient descent on w, 
+    w=gradient_w(y,X,w,Z,alpha);
+
+    %proximal gradient on Z
+    Z=prox_Z(Z,w,y,X,beta);
+
+    %check
+    if abs(f_pre-f(y,X,w,Z,alpha,beta))<epsilon
+        break
+    end
+    f_pre=f(y,X,w,Z,alpha,beta)
+end
+% f_pre

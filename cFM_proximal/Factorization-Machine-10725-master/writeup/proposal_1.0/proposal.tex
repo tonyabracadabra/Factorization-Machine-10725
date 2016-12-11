@@ -1,0 +1,115 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+% \usepackage{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+\usepackage[final]{nips_2016}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{amsmath}
+\newcommand{\vect}{\text{vec}}
+\title{Algorithms Associated with Factorization Machines}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  Yanyu Liang \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{yanyul@andrew.cmu.edu} \\
+  \And
+  Xupeng Tong \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{xtong@andrew.cmu.edu} \\
+  \AND
+  Xin Lu \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{xlu2@andrew.cmu.edu} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+% \nipsfinalcopy is no longer used
+
+\maketitle
+
+% \begin{abstract}
+%   The abstract paragraph should be indented \nicefrac{1}{2}~inch
+%   (3~picas) on both the left- and right-hand margins. Use 10~point
+%   type, with a vertical spacing (leading) of 11~points.  The word
+%   \textbf{Abstract} must be centered, bold, and in point size 12. Two
+%   line spaces precede the abstract. The abstract must be limited to
+%   one paragraph.
+% \end{abstract}
+
+\section{Introduction}
+
+Factorization machines proposed in \cite{lu1}, gives a general way to map data $X \in \mathbb{R}^n$ to real value $Y$ in a target domain $C \subseteq \mathbb{R}$ as follow (for simplicity, only second-order interaction is considered here): 
+
+\begin{align}
+  \hat{y}(\vec{x}) &= w_0 + \sum_{i = 1}^n w_i x_i + \sum_{i = 1}^n \sum_{j = i + 1}^n \langle \vec{v}_i, \vec{v}_j \rangle x_i x_j \nonumber\\
+  &= w_0 + \vec{w}^T \vec{x} + \vec{x}^T VV^T \vec{x} \quad\text{, where $V \in \mathbb{R}^{p \times k}$} \nonumber
+\end{align}
+
+In practice, with suitable loss function, FMs can be used for classification, regression, and ranking. FMs has a well established learning algorithm that have been successfully applied in many areas, is specially designed for problem that involves sparse input (e.g recommender system). By introducing factorized parametrization (or in another sense that to add additional model complexity constraint), factorization machines are reliable in the setting that data vector are almost zero. Besides, FMs have linear time complexity and they can easily mimic many different flavors of factorization models like matrix factorization, parallel factor analysis or specialized models like SVD++, PITF or FPMC by feature engineering.  However, problems still exist for the original formulation of factorization machines: i) FMs introduce a non-convex optimization with no global minimum guarantee; ii) the rank of parameter matrix needs to be set as a hyper-parameter, which requires a huge amount of computing in model selection; iii) it has no sparsity constraint on parameter matrix, which may restrict its application outside matrix completion.
+
+To tackle the non-convex issue, \cite{lu2} used symmetric parameter matrix $Z$ instead of the original  form $VV^T$ and train the symmetric parameter matrix $Z$ directly. Besides, they replace the original squared Frobenius matrix norm with a nuclear norm (trace norm) in the objective function. The original problem, after all these transformations, is casted into a convex optimization problem where the global optimal could be achieved. Also, the new formulation reduces the restrictions on feature interaction weight matrix $Z$ compared to the vanilla version, e.g $Z$ is not required to be  positive semi-definiteness. What’s more, the issue of sparse inputs is tackled by penalizing the high rank of matrix parameter $Z$, which is controlled by $\beta$ and not dependent on the hyper-parameter $k$ (matrix rank).
+
+To solve the formulated convex optimization problem, two-block coordinate descent algorithm is used \cite{lu2}. By dividing the original objective function into two, the feature weight vector and the low-rank feature interaction weight matrix $Z$ could be solved separately. Further, in order to estimate the value of $\vec{w}$, standard coordinate descent is directly applied, while the estimation of $Z$ utilizes a greedy coordinate descent algorithm, where the eigendecomposition of $Z$ is maintained.
+
+% Spiriti Sapienti  intro can be added here
+Furthermore, to introduce sparsity to $Z$, we need to add a constraint saying that every row in $V$ should be orthogonal to each other. In 2014, \cite{vervier2014learning} proposed a matrix penalty term that could do this. Therefore, it is straightforward to extend the original FMs by introducing such orthogonal constraint. Alternatively, with Lasso penalty in hand, the sparsity can also be introduced with $\|\vect(VV^T)\|_1$. 
+ 
+\section{Our Plan}
+
+There are several ways of addressing the nuclear norm regularization problems and one out of many is to to use proximal gradient descent, which commonly involves the proximal operator and iterative soft thresholding on singular values \cite{lu3}, is time consuming when scaling to large matrix sizes. However, through years of study, many algorithms have been developed to address the scalability of nuclear norm problem like \cite{lu4} using method on the modification of proximal gradient descent.
+
+% Spiriti Sapienti  plan can be added here
+
+For solving the FMs with additional sparsity constraints, we plan to first derive the basic subgradient descent method for both the orthogonal column penalty and the revised Lasso penalty before second milestone. If time permits, we will also explore the possibility to use more advanced method to solve them, such as proximal descent. Also, we will obtain some real world data from previous work on FMs and generate some simulated data for testing the performance of our algorithm in different cases.
+
+\section*{References}
+\small{
+\renewcommand{\section}[2]{}%
+\bibliography{proposal_ref} 
+\bibliographystyle{IEEEtranN}
+}
+
+
+
+\end{document}

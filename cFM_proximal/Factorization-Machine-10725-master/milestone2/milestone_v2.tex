@@ -1,0 +1,296 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+\usepackage{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+% \usepackage[final]{nips_2016}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{amsmath}
+\usepackage{cleveref}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algorithmic}
+\newcommand{\vect}{\text{vec}}
+\newcommand{\diag}{\text{diag}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\prox}{\text{prox}}
+\newcommand{\vecc}{\text{vec}}
+
+\title{Algorithms Associated with Factorization Machines}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  Yanyu Liang \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{yanyul@andrew.cmu.edu} \\
+  \And
+  Xupeng Tong \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{xtong@andrew.cmu.edu} \\
+  \AND
+  Xin Lu \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{xlu2@andrew.cmu.edu} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+% \nipsfinalcopy is no longer used
+
+\maketitle
+
+% \begin{abstract}
+%   The abstract paragraph should be indented \nicefrac{1}{2}~inch
+%   (3~picas) on both the left- and right-hand margins. Use 10~point
+%   type, with a vertical spacing (leading) of 11~points.  The word
+%   \textbf{Abstract} must be centered, bold, and in point size 12. Two
+%   line spaces precede the abstract. The abstract must be limited to
+%   one paragraph.
+% \end{abstract}
+
+\section{Introduction}
+
+Factorization machines were proposed in \cite{FM_paper}, which has been used heavily in recommendation system. FMs introduce higher-order term to model interaction between features which works reasonably well in recommendation system context, where input data is sparse but contains some low-dimensional structure, e.g. user tends to rate more movies in a specific genre. For $x \in \mathbb{R}^p$, FMs define $f: \mathbb{R}^p \rightarrow \mathbb{R}$ using the formalization shown in \cref{eq:original}. 
+\begin{align}
+  \hat{y} &= w_0 + w^T x + \sum_{i = 1}^p\sum_{j = i + 1}^p v_i^T v_j x_i x_j \label{eq:original} \\
+  \hat{y} &= w_0 + w^T x + x^T W x \label{eq:reformal}
+\end{align}
+, where $v_i$ is k-by-1 vector and intuitively every feature is mapped to a $\mathbb{R}^k$ space where the inner product between two vectors describes the strength of interaction between two features. Here, FMs have two potential drawbacks: i) $k$ as hyperparameter of the model is needed to be chosen in practice; ii) FMs is not convex in $V$. From another perspective, if we let $V = (v_1, v_2, …, v_p)$, then $\sum_{i = 1}^p\sum_{j = i + 1}^p v_i^T v_j x_i x_j = x^T V V^T x - x^T \diag(V V^T) x = x^T (V V^T -  \diag(V V^T))  x = x^T W x$. If we model $x_i^2$ term as well, $W$ is equivalent to $VV^T$ and $\rank(W) = k$. Therefore, we can think of FMs as a linear model with second-order term where coefficients of second-order term are regularized by a low rank constraint (see \cref{eq:reformal}. With this idea, \cite{convexFM_paper} proposed a convex formalization of FMs (cFMs), where they introduced trace norm to get rid of picking hyperparameter $k$ and instead of using $V$ they used $W$ directly to formalize the problem, which leads the whole problem be convex. To solve cFMs problem, they proposed a coordinate descent method where they iteratively optimize $w_0, w$ and $W$ greedily. However, the introduction of $W$ with trace norm regularizer makes the optimization expensive, because we need to deal with $W$ directly, which is a p-by-p matrix. Additionally, \cite{generalizedFM_paper} re-formed the FMs (referred as gFMs) by removing the implicit constraint that $W$ should be positive semi-definite and $W$ has zeros in diagonal entries. Namely, they replace $W = V^TV$ with $U^TV$. To solve gFMs, they proposed a mini-batch algorithm which guarantees to converge with $O(\epsilon)$ reconstruction error when the sampling complexity is $O(k^3p \log(1/\epsilon))$. 
+
+\section{Problem set up}
+
+The goal of the project is to explore the optimization method for FMs, cFMs, and gFMs in regression setting with squared error loss as criteria, see \cref{eq:criteria},
+\begin{align}
+  L(w_0, w, V)/L(w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (y^i - \hat{y}(x^i, w_0, w, V/W))^2 \label{eq:criteria}
+\end{align}
+
+with various smooth and non-smooth regularizations on $w$, $V$ and $W$ (depends on the formalization) in regression case. Here, we define FMs with the form in \cref{eq:fm}. And we consider the following regularizations on $w$: i) $\|w\|_2^2$; ii) $\|w\|_1$; iii) $\|\vecc(V)\|_2^2$. 
+\begin{align}
+  \hat{y} &= w_0 + w^T x + x^T V^TV x \label{eq:fm} \\
+  \hat{y} &= w_0 + w^T x + x^T U^TV x \label{eq:gfm} \\
+& \text{, where $U, V \in \mathbb{R}^{k \times p}$} \nonumber
+\end{align}
+For cFMs formalization defined in \cref{eq:reformal}, we would like to first explore the case with trace norm penalty as stated in \cite{convexFM_paper}. Additionally, we would like to add sparsity constraint on interaction term, because the interaction between features should be sparity under the assumption that only features in the same genres have strong interaction and the interaction between different genres is relatively minor. Therefore, we plan to explore i) $\|W\|_{\tr}$; ii) $\|\vecc(W)\|_1$, especially we want to explore the case where we need low rank and sparsity at the same time. For gFMs case, we plan to implement the algorithm proposed in \cite{generalizedFM_paper} and compare its performance with others empirically.
+
+\section{Methods}
+
+\subsection{Solving FMs}
+
+\cite{FM_paper} proposed a stochastic gradient descent method to optimize it. The gradient of every term is as follow:
+\begin{align*}
+  \nabla_{w_0} \hat{y} &= 1 \\
+  \nabla_w \hat{y} &= x \\
+  \nabla_{V} \hat{y} &= 2 V x x^T
+\end{align*}
+The gradient of smooth regularizer $\|w\|_2^2$ and $\|\vecc(V)\|_2^2$ is:
+\begin{align*}
+  \nabla \|w\|_2^2 = 2w \\
+  \nabla \|\vecc(V)\|_2^2 = 2V
+\end{align*}
+And the proximal operator of $\|w\|_1$ is the basic soft-thresholding function:
+\begin{align*}
+\{\prox_t(x)\}_i = 
+\begin{cases}
+  x_i - t & \text{, if $x_i > t$} \\
+  0 & \text{, if $x_i \in [-t, t]$} \\
+  x_i + t & \text{, if $x_i < -t$}
+  \end{cases}
+\end{align*}
+Since the only non-smooth term is $\|w\|_1$, then we can optimize the criteria $L(w_0, w, V)$ with proximal gradient descent and accelerated proximal method. 
+
+% Besides these, we plan to try method with superlinear convergence, i.e. quasi-Newton method. The hessian of loss function is:
+% \begin{align*}
+%   \frac{\partial^2 \|\hat{y} - y\|_2^2}{\partial u_i \partial u_j} &= 2(\hat{y} - y) \frac{\partial^2 \hat{y}}{\partial u_i \partial u_j} + 2 \frac{\partial \hat{y}}{\partial u_i}\frac{\partial \hat{y}}{\partial u_j} \\
+%   & \text{, where $u_i, u_j$ are elements of $w_0, w, V$}
+% \end{align*}
+% Then the only term contributes to $\nabla^2 \hat{y}$ is $\nabla^2_{V_i, V_j} = \diag(\textbf{1}x_i x_j)$. But $\nabla^2 L$ is $(kp+p+1)$-by-$(kp+p+1)$ matrix, which is expensive to invert when $p$ is large. Alternatively, we plan to try L-BFGS method to achieve better convergence rate but with less computational cost than Newton's method.
+
+\subsection{Solving cFMs}
+
+To solve cFMs in the form of:
+\begin{align*}
+  \min_{w_0, w, W} L(w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr}
+\end{align*}
+, we can re-form it in the following way:
+\begin{equation}
+\label{eq:eq5}
+ \min_{w \in \mathbb{R}^{p}, W \in \mathbb{S}^{p \times p}} \;
+\sum_{i = 1}^n 1/2(y_i-w^T x_i-x_i^T W x_i)^2 + \alpha /2 \|w\|_2^2 + \beta\|W\|_{\text{tr}}
+\end{equation}
+. To solve the problem, \cite{convexFM_paper} proposes a two-block descent algorithm, which separates the original problem into two sub-problems:
+\begin{equation}
+\label{eq:ridge}
+ \min_{w \in \mathbb{R}^{d}} \;
+\sum_{i = 1}^n 1/2(y_i-w^T x_i-\pi_i)^2 + \alpha /2 \|w\|_2^2,
+\end{equation}
+where $\pi_i=\langle W,x_i x_i^T\rangle$, and
+\begin{equation}
+\label{eq:proximal}
+ \min_{W \in \mathbb{S}^{d*d}} \;
+\sum_{i = 1}^n 1/2(y_i-w^T x_i-x_i^T W x_i)^2 + \beta\|W\|_{\text{tr}}
+\end{equation}
+Alternatively perform standard method on \cref{eq:ridge} and greedy coordinate descent on \cref{eq:proximal} until convergence will get optimal solution $w$ and $W$.
+Similarly, we also perform the two-block descent algorithm. But the difference from \cite{convexFM_paper} is that, instead of greedy coordinate descent, here we solve \cref{eq:proximal} using proximal gradient descent. As for solving \cref{eq:ridge}, we consider it as solving a standard ridge regression problem.
+By solving the gradient of objective function in \cref{eq:ridge} equals 0, we get: $w^\prime=(X^T X+\alpha/2*I)^{-1}X^T y$, where $w^\prime$ is $(w_0, w^T)^T$. Thus, we get our standard ridge solver with respect to $w$.
+Then we consider solve \cref{eq:proximal} using proximal gradient descent. \cref{eq:proximal} can be written as $g(W)+h(W)$, where $g(W)=\sum_{i = 1}^n 1/2(y_i-w^T x_i-x_i^T W x_i)^2$ and
+$h(W)=\beta\|W\|_{\text{tr}}$. Then we have
+$$\nabla g(W)=-\sum_{i = 1}^n(y_i-w^T x_i-x_i^T W x_i)x_i x_i^T$$.
+ 
+From what we know in class, for matrix completion problem,
+$$\prox_t(W^{+})=S_{\beta t}(W^{+})=U\Sigma_{\beta t} V^T$$\\
+where $W=U\Sigma V^T$ is a SVD, and $\Sigma_{\beta t}$ is diagonal matrix with $$(\Sigma_{\beta t})_{ii}=\max\{\Sigma_{ii}-\beta t,0\}$$
+ 
+We then operate the backtracking line search on $g(W)$:
+Define
+$$G_t(W)=\left(W-\prox_t(W-t\nabla g(W))\right)/t$$
+Then fix a parameter $0 <\beta < 1$. At each iteration, start with t = 1, and while
+$$g(W-tG_t(W))>g(W)-t\nabla g(W)^T G_t(W)+\frac{t}{2}\|G_t(W)\|_F^2$$
+shrink $t=\beta t$, else performs prox gradient update
+$$\prox_t(W-t\nabla g(W))$$
+Thus, we get our prox solver with respect to $W$.
+ 
+Finally, perform the two-block descent algorithm: we iteratively perform the ridge solver and the prox solver until the optimal value meets our accuracy requirement.
+
+Beyond trace norm penalty on $W$, the introduction of non-smooth sparsity constraint makes the whole algorithm described above fail. We plan to apply subgradient method as baseline method and test the performance of augmented Lagrange Multiplier method on this problem. Here, the optimization problem we consider is the following:
+\begin{align}
+  &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(W)\|_1 \label{eq:cfm}
+  % & \text{where }  L(x, w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (w_0 + w^T x^i + x^{iT}  W x^i 
+\end{align}
+Since every term in the objective is convex, from the additive property of subgradient operator, a subgradient (let’s use $\partial f$ to denote a subgradient of $f$) of objective is given by the following quantities:
+\begin{align}
+  \partial_{W_{ij}} \|\vecc(W)\|_1 &= \begin{cases}
+    1 & \text{, if $W_{ij} < 0$} \nonumber \\
+    -1 & \text{, if $W_{ij} > 0$} \nonumber \\
+    0 & \text{, otherwise} 
+\end{cases} \\
+  \partial \|W\|_{\tr} &= U^TV \nonumber \\
+  & \text{, where $U, V$ is given by $W = U^T \Sigma V$} \nonumber
+\end{align}
+Additionally, by combining subgradient and proximal method, we can use the following iterator to update $W$:
+\begin{align*}
+  W^k \leftarrow \prox_{\|\vecc(W)\|_1, t_k}(W^{k-1} -t_k (\nabla_W L^k + \partial \|W^k\|_{\tr}))
+\end{align*}
+, where $t_k$ can be set as $\frac{1}{k}$.
+
+\cite{li2015conformal} solved the problem with both trace norm and $l_1$ penaly by augmented Lagrange multipliers (ALM), which was used in \cite{lin2010augmented} to solve matrix completion problem and robust PCA. Inspired by their works, we can reformalize \cref{eq:cfm} as follow:
+\begin{align}
+  &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 \label{eq:cfm_alm} \\
+  & \text{subject to }\quad W - P = 0
+\end{align}
+The Lagrangian is:
+\begin{align}
+  \mathcal{L}(w_0, w, W, P, Y, \mu) &= L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 \nonumber \\
+  &+ \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 + \langle Y, W - P \rangle + \frac{\mu}{2} \|\vecc(W - P)\|_2^2 \label{eq:alm}
+\end{align}
+, where $Y$ is Lagrange multiplier. Then we can apply general ALM algorithm proposed in \cite{lin2010augmented} as stated in \cref{algo:alm}. Intuitively, $\mu^k$ can be seen as a parameter penalizing on the difference between $W$ and $P$, which pushes the equality constraint to be satisfied as $\mu$ increases. In practice, we can increase $\mu^k$ geometrically (say with factor $\rho > 0$) and every time solving the subproblem in while loop, we use the previous solution as warm start.
+\begin{algorithm} 
+  \caption{ALM method solving \cref{eq:cfm_alm}}
+  \label{algo:alm}
+  \begin{algorithmic}[1]
+    \STATE $\mu_0 > 0$
+    \WHILE{not converge}
+      \STATE solve $\arg\min \mathcal{L}(w_0, w, W^{k-1}, P, Y^k, \mu^k)$ for $w_{0}^k, w^k, P^k$
+      \STATE solve $\arg\min \mathcal{L}(w_{0}^k, w^k, W, P^k, Y^k, \mu^k)$ for $W^k$
+      \STATE $Y_{k + 1} \leftarrow Y^{k} + \mu^k (W^k - P^k)$
+      \STATE Update $\mu^k$ to $\mu^{k+1}$
+    \ENDWHILE
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Solving gFMs}
+ 
+ 
+Recently, a more generalized version of FM named gFM is proposed with removal of several redundant constraints compared to the original FM, while its learning ability is kept.
+ 
+ 
+\begin{align}
+y=X^Tw^*+\mathcal{A}(U^TV)+\xi \label{eq:one_pass_gfm}
+\end{align}
+ 
+ 
+Denote the linear operator $$
+\mathcal{A} : \mathbb{R}^{p\times p} \rightarrow \mathbb{R} \\$$ $$ \mathcal{A}(M) \overset{\Delta}{=} \left[\langle A_1, M_1\rangle,\langle A_2, M\rangle, M, \cdots ,\langle A_n, M\rangle\right]^T$$
+where $Ai = x_ix_i^T$
+ 
+ 
+Specifically, we plan to use the one-pass gFM algorithm proposed by the author in solving this problem.
+ 
+ 
+As a mini-batch algorithm, it receives $n$ training instances at each time then updates their parameters alternatively. To avoid the global convergence problem cast by the nonconvex learning problem with canonical gradient descent method, an estimation sequence is used instead.
+ 
+ 
+\begin{algorithm}
+ \caption{One pass algorithm solving \cref{eq:one_pass_gfm}}
+ \label{algo:alm}
+ \begin{algorithmic}[1]
+ \REQUIRE Mini-batch size $n$, number of total mini-batch update $T$, training instances $X=[x_1, x_2,\cdots, x_{nT}]^T, y=[y_1, y_2, \cdots, y_{nT}]^T$, desired rank $k \geq 1$
+ \ENSURE $\mathit{w}^{(T)}, \mathit{U}^{(T)}, \mathit{V}^{(T)}$
+ \STATE Define $M^{(t)}\overset{\Delta}{=}\left( \frac{U^{(t)}{V^{(t)}}^T+V^{(t)}{U^{(t)}}^T}{2}\right),
+H_1^{(t)}\overset{\Delta}{=}\frac{1}{2n}\mathcal{A}'\left(y-\mathcal{A}(M^{(t)})-{X^{(t)}}^Tw^{(t)}\right),
+h_2^{(t)}\overset{\Delta}{=}\frac{1}{n}\mathbf{1}^T\left(y-\mathcal{A}(M^{(t)})-{X^{(t)}}^Tw^{(t)}\right),
+h_3^{(t)}\overset{\Delta}{=}\frac{1}{n}X^{(t)}\left(y-\mathcal{A}(M^{(t)})-{X^{(t)}}^Tw^{(t)}\right)$
+ \STATE Initialize: $\mathit{w}^{(0)}=0, \mathit{V}^{(0)}=0. \mathit{U}^{(0)}=\mathrm{SVD}\left(H_1^{0}-\frac{1}{2}h_2^{(0)}I,k\right)$
+    \FOR{$t=1,2,\cdots,T$}
+     \STATE Retrieve $x^{(T)}=[x_{(t-1)n+1},\cdots,x_{(t-1)n+n}]$. Define $\mathcal{A}(M) \overset{\Delta}{=} \left[{X_i^{(t)}}^TMX_i^{(t)}\right]$
+     \STATE $\hat{U}^{(t)}=\left(H_1^{(t-1)}-\frac{1}{2}h_2^{(t-1)}I+{M^{(t-1)}}^TU^{(t-1)}\right)$
+     \STATE Orthogonalize $\hat{U}^{(t)}$ via QR decomposition: $U^{(t)}=QR(\hat{U}^{(t)})$  
+     \STATE $\mathit{w}^{(t)}=\mathit{h}_3^{(t-1)}+\mathit{w}^{(t-1)}$
+     \STATE $\mathit{V}^{t}=(\mathit{H}_1^{(t-1)}-\frac{1}{2}h_2^{(t-1)}I+\mathit{M}^{(t-1)})\mathit{U}^{(t)}$
+    \ENDFOR
+\STATE \textbf{Output:} $\mathit{w}^{(T)},\mathit{U}^{(T)},\mathit{V}^{(T)}$
+ \end{algorithmic}
+\end{algorithm}
+
+\section{Plan}
+ 
+We plan to implement all problems stated above, with different formalization or different regularization terms, and test their performance on both synthetic data and real, complicated datasets like movielens 100k, 1M, 2M etc. To explore the pros/cons of each specific formalization, we would like to test their prediction accruracy on the synthetic data, where we may consider cases such as sparse input $x$, sparse first order effect $w$ and sparse interaction term $W$. Then, we plan to apply them on a real data set provided by \cite{FM_paper}. Finally, we might want to apply our algorithm in one of the ongoing Kaggle competition \textit{Santander Product Recommendation}.
+
+
+\section*{References}
+\small{
+\renewcommand{\section}[2]{}%
+\bibliography{myref} 
+\bibliographystyle{IEEEtranN}
+}
+
+
+
+\end{document}

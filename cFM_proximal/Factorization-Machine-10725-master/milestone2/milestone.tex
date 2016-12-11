@@ -1,0 +1,217 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+% \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading nips_2016
+%
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{nips_2016}
+
+% \usepackage{nips_2016}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+\usepackage[final]{nips_2016}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{amsmath}
+\usepackage{cleveref}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algorithmic}
+\newcommand{\vect}{\text{vec}}
+\newcommand{\diag}{\text{diag}}
+\newcommand{\rank}{\text{rank}}
+\newcommand{\tr}{\text{tr}}
+\newcommand{\prox}{\text{prox}}
+\newcommand{\vecc}{\text{vec}}
+
+\title{Algorithms Associated with Factorization Machines}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+\author{
+  Yanyu Liang \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{yanyul@andrew.cmu.edu} \\
+  \And
+  Xupeng Tong \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{xtong@andrew.cmu.edu} \\
+  \AND
+  Xin Lu \\
+  Computational Biology Department\\
+  Carnegie Mellon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{xlu2@andrew.cmu.edu} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+% \nipsfinalcopy is no longer used
+
+\maketitle
+
+% \begin{abstract}
+%   The abstract paragraph should be indented \nicefrac{1}{2}~inch
+%   (3~picas) on both the left- and right-hand margins. Use 10~point
+%   type, with a vertical spacing (leading) of 11~points.  The word
+%   \textbf{Abstract} must be centered, bold, and in point size 12. Two
+%   line spaces precede the abstract. The abstract must be limited to
+%   one paragraph.
+% \end{abstract}
+
+\section{Introduction}
+
+
+Copy proposal?
+
+
+OR: (please feel free to improve it!)
+Factorization machines were proposed in \cite{FM_paper}, which has been used heavily in recommendation system. FMs introduce higher-order term to model interaction between features which works reasonably well in recommendation system context, where input data is sparse but contains some low-dimensional structure, e.g. user tends to rate more movies in a specific genre. For $x \in \mathbb{R}^p$, FMs define $f: \mathbb{R}^p \rightarrow \mathbb{R}$ using the formalization shown in \Cref{eq:original}. 
+\begin{align}
+  \hat{y} &= w_0 + w^T x + \sum_{i = 1}^p\sum_{j = i + 1}^p v_i^T v_j x_i x_j \label{eq:original} \\
+  \hat{y} &= w_0 + w^T x + x^T W x \label{eq:reformal}
+\end{align}
+, where $v_i$ is k-by-1 vector and intuitively every feature is mapped to a $\mathbb{R}^k$ space where the inner product between two vectors describes the strength of interaction between two features. Here, FMs have two potential drawbacks: i) $k$ as hyperparameter of the model is needed to be chosen in practice; ii) FMs is not convex in $V$. From another perspective, if we let $V = (v_1, v_2, …, v_p)$, then $\sum_{i = 1}^p\sum_{j = i + 1}^p v_i^T v_j x_i x_j = x^T V V^T x - x^T \diag(V V^T) x = x^T (V V^T -  \diag(V V^T))  x = x^T W x$. If we model $x_i^2$ term as well, $W$ is equivalent to $VV^T$ and $\rank(W) = k$. Therefore, we can think of FMs as a linear model with second-order term where coefficients of second-order term are regularized by a low rank constraint (see \Cref{eq:reformal}. With this idea, \cite{convexFM_paper} proposed a convex formalization of FMs (cFMs), where they introduced trace norm to get rid of picking hyperparameter $k$ and instead of using $V$ they used $W$ directly to formalize the problem, which leads the whole problem be convex. To solve cFMs problem, they proposed a coordinate descent method where they iteratively optimize $w_0, w$ and $W$ greedily. However, the introduction of $W$ with trace norm regularizer makes the optimization expensive, because we need to deal with $W$ directly, which is a p-by-p matrix. Additionally, \cite{generalizedFM_paper} re-formed the FMs (referred as gFMs) by removing the implicit constraint that $W$ should be positive semi-definite and $W$ has zeros in diagonal entries. Namely, they replace $W = V^TV$ with $U^TV$. To solve gFMs, they proposed a mini-batch algorithm which guarantees to converge with $O(\epsilon)$ reconstruction error when the sampling complexity is $O(k^3p \log(1/\epsilon))$. 
+
+
+\section{Problem set up}
+
+
+The goal of the project is to explore the optimization method for FMs, cFMs, and gFMs in regression setting with squared error loss as criteria, see \Cref{eq:criteria},
+\begin{align}
+  L(w_0, w, V)/L(w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (y^i - \hat{y}(x^i, w_0, w, V/W))^2 \label{eq:criteria}
+\end{align}
+
+with various smooth and non-smooth regularizations on $w$, $V$ and $W$ (depends on the formalization) in regression case. Here, we define FMs with the form in \Cref{eq:fm}. And we consider the following regularizations on $w$: i) $\|w\|_2^2$; ii) $\|w\|_1$; iii) $\|\vecc(V)\|_2^2$. 
+\begin{align}
+  \hat{y} &= w_0 + w^T x + x^T V^TV x \label{eq:fm} \\
+  \hat{y} &= w_0 + w^T x + x^T U^TV x \label{eq:gfm} \\
+& \text{, where $U, V \in \mathbb{R}^{k \times p}$} \nonumber
+\end{align}
+For cFMs formalization defined in \Cref{eq:reformal}, we would like to first explore the case with trace norm penalty as stated in \cite{convexFM_paper}. Additionally, we would like to add sparsity constraint on interaction term, because the interaction between features should be sparity under the assumption that only features in the same genres have strong interaction and the interaction between different genres is relatively minor. Therefore, we plan to explore i) $\|W\|_{\tr}$; ii) $\|\vecc(W)\|_1$, especially we want to explore the case where we need low rank and sparsity at the same time. For gFMs case, we plan to implement the algorithm proposed in \cite{generalizedFM_paper} and compare its performance with others empirically.
+
+
+\section{Methods}
+
+
+\subsection{Solving FMs}
+
+\cite{FM_paper} proposed a stochastic gradient descent method to optimize it. The gradient of every term is as follow:
+\begin{align*}
+  \nabla_{w_0} \hat{y} &= 1 \\
+  \nabla_w \hat{y} &= x \\
+  \nabla_{V} \hat{y} &= 2 V x x^T
+\end{align*}
+The gradient of smooth regularizer $\|w\|_2^2$ and $\|\vecc(V)\|_2^2$ is:
+\begin{align*}
+  \nabla \|w\|_2^2 = 2w \\
+  \nabla \|\vecc(V)\|_2^2 = 2V
+\end{align*}
+And the proximal operator of $\|w\|_1$ is the basic soft-thresholding function:
+\begin{align*}
+\{\prox_t(x)\}_i = 
+\begin{cases}
+  x_i - t & \text{, if $x_i > t$} \\
+  0 & \text{, if $x_i \in [-t, t]$} \\
+  x_i + t & \text{, if $x_i < -t$}
+  \end{cases}
+\end{align*}
+Since the only non-smooth term is $\|w\|_1$, then we can optimize the criteria $L(w_0, w, V)$ with proximal gradient descent and accelerated proximal method. 
+
+% Besides these, we plan to try method with superlinear convergence, i.e. quasi-Newton method. The hessian of loss function is:
+% \begin{align*}
+%   \frac{\partial^2 \|\hat{y} - y\|_2^2}{\partial u_i \partial u_j} &= 2(\hat{y} - y) \frac{\partial^2 \hat{y}}{\partial u_i \partial u_j} + 2 \frac{\partial \hat{y}}{\partial u_i}\frac{\partial \hat{y}}{\partial u_j} \\
+%   & \text{, where $u_i, u_j$ are elements of $w_0, w, V$}
+% \end{align*}
+% Then the only term contributes to $\nabla^2 \hat{y}$ is $\nabla^2_{V_i, V_j} = \diag(\textbf{1}x_i x_j)$. But $\nabla^2 L$ is $(kp+p+1)$-by-$(kp+p+1)$ matrix, which is expensive to invert when $p$ is large. Alternatively, we plan to try L-BFGS method to achieve better convergence rate but with less computational cost than Newton's method.
+
+\subsection{Solving cFMs}
+
+Beyond trace norm penalty on $W$, the introduction of non-smooth sparsity constraint makes the whole algorithm described above fail. We plan to apply subgradient method as baseline method and test the performance of augmented Lagrange Multiplier method on this problem. Here, the optimization problem we consider is the following:
+\begin{align}
+  &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(W)\|_1 \label{eq:cfm}
+  % & \text{where }  L(x, w_0, w, W) = \frac{1}{n}\sum_{i = 1}^n (w_0 + w^T x^i + x^{iT}  W x^i 
+\end{align}
+Since every term in the objective is convex, from the additive property of subgradient operator, a subgradient (let’s use $\partial f$ to denote a subgradient of $f$) of objective is given by the following quantities:
+\begin{align}
+  \partial_{W_{ij}} \|\vecc(W)\|_1 &= \begin{cases}
+    1 & \text{, if $W_{ij} < 0$} \nonumber \\
+    -1 & \text{, if $W_{ij} > 0$} \nonumber \\
+    0 & \text{, otherwise} 
+\end{cases} \\
+  \partial \|W\|_{\tr} &= U^TV \nonumber \\
+  & \text{, where $U, V$ is given by $W = U^T \Sigma V$} \nonumber
+\end{align}
+Additionally, by combining subgradient and proximal method, we can use the following iterator to update $W$:
+\begin{align*}
+  W^k \leftarrow \prox_{\|\vecc(W)\|_1, t_k}(W^{k-1} -t_k (\nabla_W L^k + \partial \|W^k\|_{\tr}))
+\end{align*}
+, where $t_k$ can be set as $\frac{1}{k}$.
+
+\cite{li2015conformal} solved the problem with both trace norm and $l_1$ penaly by augmented Lagrange multipliers (ALM), which was used in \cite{lin2010augmented} to solve matrix completion problem and robust PCA. Inspired by their works, we can reformalize \cref{eq:cfm} as follow:
+\begin{align}
+  &\min_{w_0, w, W} L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 + \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 \label{eq:cfm_alm} \\
+  & \text{subject to }\quad W - P = 0
+\end{align}
+The Lagrangian is:
+\begin{align}
+  \mathcal{L}(w_0, w, W, P, Y, \mu) &= L(x, w_0, w, W) + \lambda_1 \|w\|_2^2 \nonumber \\
+  &+ \lambda_2 \|W\|_{\tr} + \lambda_3 \|\vecc(P)\|_1 + \langle Y, W - P \rangle + \frac{\mu}{2} \|\vecc(W - P)\|_2^2 \label{eq:alm}
+\end{align}
+, where $Y$ is Lagrange multiplier. Then we can apply general ALM algorithm proposed in \cite{lin2010augmented} as stated in \cref{algo:alm}. Intuitively, $\mu^k$ can be seen as a parameter penalizing on the difference between $W$ and $P$, which pushes the equality constraint to be satisfied as $\mu$ increases. In practice, we can increase $\mu^k$ geometrically (say with factor $\rho > 0$) and every time solving the subproblem in while loop, we use the previous solution as warm start.
+\begin{algorithm} 
+  \caption{ALM method solving \cref{eq:cfm_alm}}
+  \label{algo:alm}
+  \begin{algorithmic}[1]
+    \STATE $\mu_0 > 0$
+    \WHILE{not converge}
+      \STATE solve $\arg\min \mathcal{L}(w_0, w, W^{k-1}, P, Y^k, \mu^k)$ for $w_{0}^k, w^k, P^k$
+      \STATE solve $\arg\min \mathcal{L}(w_{0}^k, w^k, W, P^k, Y^k, \mu^k)$ for $W^k$
+      \STATE $Y_{k + 1} \leftarrow Y^{k} + \mu^k (W^k - P^k)$
+      \STATE Update $\mu^k$ to $\mu^{k+1}$
+    \ENDWHILE
+  \end{algorithmic}
+\end{algorithm}
+
+
+
+\section{Plan}
+
+
+\section*{References}
+\small{
+\renewcommand{\section}[2]{}%
+\bibliography{myref} 
+\bibliographystyle{IEEEtranN}
+}
+
+
+
+\end{document}
