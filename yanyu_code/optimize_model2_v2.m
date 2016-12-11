@@ -39,14 +39,16 @@ function [w0, w, W, U, u, objs, counters] = m2_admm(x, y, lambda1, lambda2, lamb
     u = u_init;
     objs = zeros(max_step, 1);
     counters = [];
-    imagesc(W);
+    % imagesc(W);
     for i = 1 : max_step
         counter = [0, 0, 0];
         if mode == 1
             [w0, w, W, counter] = argmin_w0_w_W_proximal(lambda2, lambda3, x, y, W, w, w0, U, u, rho, tol, debug, counter); % coded
-            imagesc(W);
-        else
+            % imagesc(W);
+        elseif mode == 2
             [w0, w, W, counter] = argmin_w0_w_W_coordinate(lambda2, lambda3, x, y, W, w, w0, U, u, rho, tol, debug, counter);
+        else
+            [w0, w, W, counter] = argmin_w0_w_W_quasinewton(lambda2, lambda3, x, y, W, w, w0, U, u, rho, tol, debug, counter);
         end
         disp([num2str(compute_obj(w0, w, W, U, u, rho, x, y, lambda1, lambda2, lambda3)), ' update w0 w W']);
         [U, counter] = argmin_U(lambda1, W, u, rho, debug, counter); % coded
@@ -258,7 +260,7 @@ function [W, counter, objs] = argmin_W_owlqn(lambda2, x, y, W, w, w0, U, u, rho,
     
     yhat = y - w0 - x * w;
     tempUu = U - u;
-    [W, counter, objs, ~] = owlbfgs(@compute_objW_grad, W, x, yhat, lambda2, tempUu, rho, counter, 'display',2,'maxiter',1e4,'ftol',tol, 'max_linesearch', 100);
+    [W, counter, objs, ~] = owlbfgs(@compute_objW_grad, W, x, yhat, lambda2, tempUu, rho, counter, 'display',2,'maxiter',100,'ftol',tol, 'max_linesearch', 100);
     
     y_hatt = diag(x * W * x');
     yt = y - compute_y_hat_w(w0, w, x);
@@ -278,4 +280,31 @@ function [obj, grad] = compute_objW_grad(W, x, yhat, lambda2, tempUu, rho)
 
     grad(I1) = grad(I1) + max(-lambda2, -grad(I1));
     grad(I2) = grad(I2) + min(lambda2, -grad(I2));
+end
+
+function [w0, w, W, counter] = argmin_w0_w_W_quasinewton(lambda2, lambda3, x, y, W, w, w0, U, u, rho, tol, debug, counter)
+        % coordinate descent
+%     inner_debug = 0;
+    obj = compute_obj1(lambda2, lambda3, x, y, W, w, w0, U, u, rho);
+    delta = tol + 1;
+    if debug >= 1
+        disp([num2str(obj), ' argmin_w0_w_W start']);
+    end
+    inner_count = 1;
+    while delta > tol && inner_count < 5
+        % update w, w0
+        [w0, w, counter] = argmin_w0_w_operator(lambda3, x, y, W, w, w0, tol, debug, counter); % coded, checked
+        % update W
+        [W, counter] = argmin_W_owlqn(lambda2, x, y, W, w, w0, U, u, rho, tol, debug, counter); % coded, checked
+        obj_new = compute_obj1(lambda2, lambda3, x, y, W, w, w0, U, u, rho); % coded
+        delta = obj - obj_new;
+        obj = obj_new;
+        if debug >= 1
+            disp([num2str(obj), ' argmin_w0_w_W inside']);
+        end
+        inner_count = inner_count + 1;
+    end
+    if debug >= 1
+        disp([num2str(obj), ' argmin_w0_w_W end']);
+    end
 end
