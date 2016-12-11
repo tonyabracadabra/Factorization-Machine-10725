@@ -1,0 +1,4 @@
+method, train_mse, train_var_ratio_to_truth, test_mse, test_var_ratio_to_truth
+FM, 2.903593e-02, 1.339638e-01, 2.890226e+02, 1.008383e+03
+cFM_orig, 2.211673e+02, 1.020405e+03, 3.932604e+02, 1.372062e+03
+cFM_sparse, 2.207934e+02, 1.018680e+03, 3.926360e+02, 1.369883e+03
