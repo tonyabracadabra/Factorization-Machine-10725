@@ -260,7 +260,7 @@ function [W, counter, objs] = argmin_W_owlqn(lambda2, x, y, W, w, w0, U, u, rho,
     
     yhat = y - w0 - x * w;
     tempUu = U - u;
-    [W, counter, objs, ~] = owlbfgs(@compute_objW_grad, W, x, yhat, lambda2, tempUu, rho, counter, 'display',2,'maxiter',100,'ftol',tol, 'max_linesearch', 100);
+    [W, counter, objs, ~] = owlbfgs(@compute_objW_grad, W, x, yhat, lambda2, tempUu, rho, counter, 'display',1,'maxiter',30,'ftol',tol, 'max_linesearch', 100);
     
     y_hatt = diag(x * W * x');
     yt = y - compute_y_hat_w(w0, w, x);
@@ -291,7 +291,7 @@ function [w0, w, W, counter] = argmin_w0_w_W_quasinewton(lambda2, lambda3, x, y,
         disp([num2str(obj), ' argmin_w0_w_W start']);
     end
     inner_count = 1;
-    while delta > tol && inner_count < 5
+    while delta > tol && inner_count <= 10
         % update w, w0
         [w0, w, counter] = argmin_w0_w_operator(lambda3, x, y, W, w, w0, tol, debug, counter); % coded, checked
         % update W

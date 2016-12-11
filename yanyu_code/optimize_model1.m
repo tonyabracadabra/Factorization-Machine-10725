@@ -198,7 +198,9 @@ function [w0, w, V, W, objs] = m1_proximal_descent(x, y, lambda1, lambda2, lambd
         objs = [objs; f_temp, inner_counter];
         delta = obj_pre - f_temp;
         obj_pre = f_temp; 
-        disp(obj_pre);
+        if mod(step_counter, 500) == 1
+            disp([obj_pre, step_counter]);
+        end
         step_counter = step_counter + 1;
 %         disp(t);
     end
