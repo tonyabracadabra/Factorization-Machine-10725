@@ -10,7 +10,7 @@ p = 10;
 % train_mse = zeros(5,nmethods);
 % train_var_ratio_to_truth = zeros(5, methods);
 numtrain = 400;
-fid = fopen(['../results/', datatype, '_p', num2str(p), '.log'], 'w+');
+fid = fopen(['../results/', datatype, '_p', num2str(p), '.log'], 'a');
 fprintf(fid, '%s, %s, %s, %s, %s\n', 'method', 'train_mse', ...
     'train_var_ratio_to_truth', 'test_mse', 'test_var_ratio_to_truth');
 for i = 1 : 5
@@ -41,7 +41,7 @@ for i = 1 : 5
     w0_init = 0;
     w_init = zeros(p, 1);
     V_init = rand(k, p); % zeros(k, p); %
-    maxstep = 1e5;
+    maxstep = 20 * 301;
     tol = 1e-3;
     tmax = 10;
     lina = 0.5;
@@ -68,7 +68,8 @@ for i = 1 : 5
     epsilon = 1e-3;
     alpha = 1;
     beta = 10;
-    [ff, w, Z] = cFM_prox_initial_with_zeros(xtrain, ytrain, alpha, beta, epsilon);
+    maxstep = 20 * 301;
+    [ff, w, Z] = cFM_prox_initial_with_zeros(xtrain, ytrain, alpha, beta, epsilon, maxstep);
     y_hat_grad_test = xtest * w + diag(xtest * Z * xtest');
     y_hat_grad_train = xtrain * w + diag(xtrain * Z * xtrain');
     [trainmse, trainvarratio] = give_me_measure(y_hat_grad_train, ytrain, vartrain);
@@ -92,8 +93,8 @@ for i = 1 : 5
     u_init = W_init;
     tol = 1e-2;
     rho = 5;
-    debug = 2;
-    max_step = 50; % ADMM iterations
+    debug = 1;
+    max_step = 20; % ADMM iterations
     mode = 3; % coordinate descent with owl-qn
     [w0_admm_prox, w_admm_prox, W_admm_prox, U_admm_prox, u_admm_prox, objs_admm_prox, counter_admm_prox] ...
         = opt_model2.admm(xtrain, ytrain, lambda1, lambda2, lambda3, w0_init, w_init, W_init, U_init, u_init, rho, max_step, tol, debug, mode);
@@ -106,5 +107,4 @@ for i = 1 : 5
     trainvarratio, testmse, testvarratio);
     fclose(fid);  
 end
-    
     
