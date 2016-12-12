@@ -1,321 +1,401 @@
 >> script_data_gen
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 3.5459
-scale of w = 0.5622
-scale of W = 0.27306
+size is 10
+scale of w0 = 0.70918
+scale of w = 1.1244
+scale of W = 0.28511
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 2.8157
-scale of w = 0.48616
-scale of W = 0.33483
+size is 10
+scale of w0 = 0.56314
+scale of w = 0.97231
+scale of W = 0.3678
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 3.7892
-scale of w = 0.67933
-scale of W = 0.27047
+size is 10
+scale of w0 = 0.75784
+scale of w = 1.3587
+scale of W = 0.30779
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 0.10263
-scale of w = 0.57527
-scale of W = 0.28193
+size is 10
+scale of w0 = 0.020526
+scale of w = 1.1505
+scale of W = 0.35463
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 1.7749
-scale of w = 0.43475
-scale of W = 0.23653
+size is 10
+scale of w0 = 0.35498
+scale of w = 0.8695
+scale of W = 0.25347
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 4.9227
-scale of w = 0.48829
-scale of W = 0.9245
+size is 100
+scale of w0 = 0.98454
+scale of w = 0.97658
+scale of W = 1.226
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 3.8398
-scale of w = 0.4838
-scale of W = 0.9086
+size is 100
+scale of w0 = 0.76797
+scale of w = 0.96761
+scale of W = 1.207
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 3.2348
-scale of w = 0.50319
-scale of W = 0.96017
+size is 100
+scale of w0 = 0.64697
+scale of w = 1.0064
+scale of W = 1.2895
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 0.07645
-scale of w = 0.51794
-scale of W = 0.92256
+size is 100
+scale of w0 = 0.01529
+scale of w = 1.0359
+scale of W = 1.2196
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 2.4728
-scale of w = 0.46773
-scale of W = 0.9097
+size is 100
+scale of w0 = 0.49457
+scale of w = 0.93547
+scale of W = 1.2146
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 1.3335
-scale of w = 0.49947
-scale of W = 2.0435
+size is 500
+scale of w0 = 0.26671
+scale of w = 0.99895
+scale of W = 2.7244
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 0.68304
-scale of w = 0.48329
-scale of W = 2.0388
+size is 500
+scale of w0 = 0.13661
+scale of w = 0.96657
+scale of W = 2.7123
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 2.9977
-scale of w = 0.49068
-scale of W = 2.0382
+size is 500
+scale of w0 = 0.59954
+scale of w = 0.98137
+scale of W = 2.7096
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 0.52844
-scale of w = 0.50007
-scale of W = 2.0435
+size is 500
+scale of w0 = 0.10569
+scale of w = 1.0001
+scale of W = 2.7236
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 0.028929
-scale of w = 0.47984
-scale of W = 2.047
+size is 500
+scale of w0 = 0.0057859
+scale of w = 0.95968
+scale of W = 2.7428
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 4.5571
-scale of w = 0.49577
-scale of W = 2.8757
+size is 1000
+scale of w0 = 0.91143
+scale of w = 0.99153
+scale of W = 3.8388
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 3.8836
-scale of w = 0.50208
-scale of W = 2.8628
+size is 1000
+scale of w0 = 0.77671
+scale of w = 1.0042
+scale of W = 3.8108
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 1.7159
-scale of w = 0.48347
-scale of W = 2.8701
+size is 1000
+scale of w0 = 0.34319
+scale of w = 0.96695
+scale of W = 3.8216
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 4.5373
-scale of w = 0.50552
-scale of W = 2.8645
+size is 1000
+scale of w0 = 0.90746
+scale of w = 1.011
+scale of W = 3.8161
 --- w_sparse_W_lowrank_sym ---
-scale of w0 = 3.9824
-scale of w = 0.49399
-scale of W = 2.8669
+size is 1000
+scale of w0 = 0.79649
+scale of w = 0.98798
+scale of W = 3.8279
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 3.3813
-scale of w = 0.33558
-scale of W = 0.23649
+size is 10
+scale of w0 = 0.67626
+scale of w = 0.67116
+scale of W = 4.7297
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 1.984
-scale of w = 0.52113
-scale of W = 0.24341
+size is 10
+scale of w0 = 0.39681
+scale of w = 1.0423
+scale of W = 4.8681
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 0.33923
-scale of w = 0.47387
-scale of W = 0.24649
+size is 10
+scale of w0 = 0.067846
+scale of w = 0.94774
+scale of W = 4.9298
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.3389
-scale of w = 0.33639
-scale of W = 0.26757
+size is 10
+scale of w0 = 0.46779
+scale of w = 0.67278
+scale of W = 5.3515
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.1817
-scale of w = 0.5384
-scale of W = 0.23781
+size is 10
+scale of w0 = 0.43633
+scale of w = 1.0768
+scale of W = 4.7562
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 1.2789
-scale of w = 0.46324
-scale of W = 0.24814
+size is 100
+scale of w0 = 0.25578
+scale of w = 0.92648
+scale of W = 4.9629
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 1.7873
-scale of w = 0.48031
-scale of W = 0.25106
+size is 100
+scale of w0 = 0.35746
+scale of w = 0.96062
+scale of W = 5.0212
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.7798
-scale of w = 0.53612
-scale of W = 0.24736
+size is 100
+scale of w0 = 0.55595
+scale of w = 1.0722
+scale of W = 4.9472
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.1871
-scale of w = 0.49513
-scale of W = 0.25005
+size is 100
+scale of w0 = 0.43743
+scale of w = 0.99026
+scale of W = 5.0011
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 3.7136
-scale of w = 0.4804
-scale of W = 0.25047
+size is 100
+scale of w0 = 0.74271
+scale of w = 0.96079
+scale of W = 5.0093
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.3784
-scale of w = 0.49238
-scale of W = 0.25044
+size is 500
+scale of w0 = 0.47568
+scale of w = 0.98476
+scale of W = 5.0088
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.1132
-scale of w = 0.51116
-scale of W = 0.25024
+size is 500
+scale of w0 = 0.42264
+scale of w = 1.0223
+scale of W = 5.0047
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 1.6708
-scale of w = 0.48769
-scale of W = 0.24975
+size is 500
+scale of w0 = 0.33416
+scale of w = 0.97537
+scale of W = 4.995
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 1.732
-scale of w = 0.47164
-scale of W = 0.24981
+size is 500
+scale of w0 = 0.34639
+scale of w = 0.94329
+scale of W = 4.9963
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 4.2401
-scale of w = 0.5115
-scale of W = 0.24995
+size is 500
+scale of w0 = 0.84802
+scale of w = 1.023
+scale of W = 4.9991
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 4.9832
-scale of w = 0.49627
-scale of W = 0.24963
+size is 1000
+scale of w0 = 0.99665
+scale of w = 0.99254
+scale of W = 4.9927
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 1.5194
-scale of w = 0.48863
-scale of W = 0.24984
+size is 1000
+scale of w0 = 0.30388
+scale of w = 0.97727
+scale of W = 4.9969
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 0.68918
-scale of w = 0.49166
-scale of W = 0.25006
+size is 1000
+scale of w0 = 0.13784
+scale of w = 0.98332
+scale of W = 5.0011
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 4.6427
-scale of w = 0.50915
-scale of W = 0.2499
+size is 1000
+scale of w0 = 0.92855
+scale of w = 1.0183
+scale of W = 4.9979
 --- w_sparse_W_lowrank_asym ---
-scale of w0 = 2.5782
-scale of w = 0.49744
-scale of W = 0.25008
+size is 1000
+scale of w0 = 0.51563
+scale of w = 0.99487
+scale of W = 5.0017
 --- w_sparse_W_sparse ---
-scale of w0 = 2.0908
-scale of w = 0.36429
-scale of W = 0.059268
+size is 10
+scale of w0 = 0.41816
+scale of w = 0.72857
+scale of W = 1.1854
 --- w_sparse_W_sparse ---
-scale of w0 = 2.7387
-scale of w = 0.54921
-scale of W = 0.13799
+size is 10
+scale of w0 = 0.54773
+scale of w = 1.0984
+scale of W = 2.7598
 --- w_sparse_W_sparse ---
-scale of w0 = 3.3228
-scale of w = 0.40275
-scale of W = 0.21219
+size is 10
+scale of w0 = 0.66456
+scale of w = 0.80549
+scale of W = 4.2437
 --- w_sparse_W_sparse ---
-scale of w0 = 4.7412
-scale of w = 0.45472
-scale of W = 0.24862
+size is 10
+scale of w0 = 0.94825
+scale of w = 0.90944
+scale of W = 4.9725
 --- w_sparse_W_sparse ---
-scale of w0 = 0.80373
-scale of w = 0.47051
-scale of W = 0.15234
+size is 10
+scale of w0 = 0.16075
+scale of w = 0.94102
+scale of W = 3.0467
 --- w_sparse_W_sparse ---
-scale of w0 = 4.7634
-scale of w = 0.4722
-scale of W = 0.17435
+size is 100
+scale of w0 = 0.95267
+scale of w = 0.94439
+scale of W = 3.4869
 --- w_sparse_W_sparse ---
-scale of w0 = 4.4193
-scale of w = 0.53409
-scale of W = 0.15563
+size is 100
+scale of w0 = 0.88385
+scale of w = 1.0682
+scale of W = 3.1125
 --- w_sparse_W_sparse ---
-scale of w0 = 0.95358
-scale of w = 0.44189
-scale of W = 0.17653
+size is 100
+scale of w0 = 0.19072
+scale of w = 0.88377
+scale of W = 3.5305
 --- w_sparse_W_sparse ---
-scale of w0 = 1.8361
-scale of w = 0.4642
-scale of W = 0.17966
+size is 100
+scale of w0 = 0.36721
+scale of w = 0.92839
+scale of W = 3.5932
 --- w_sparse_W_sparse ---
-scale of w0 = 2.6783
-scale of w = 0.48483
-scale of W = 0.16878
+size is 100
+scale of w0 = 0.53565
+scale of w = 0.96966
+scale of W = 3.3756
 --- w_sparse_W_sparse ---
-scale of w0 = 0.39923
-scale of w = 0.47674
-scale of W = 0.16874
+size is 500
+scale of w0 = 0.079845
+scale of w = 0.95347
+scale of W = 3.3748
 --- w_sparse_W_sparse ---
-scale of w0 = 4.2453
-scale of w = 0.52536
-scale of W = 0.16628
+size is 500
+scale of w0 = 0.84906
+scale of w = 1.0507
+scale of W = 3.3255
 --- w_sparse_W_sparse ---
-scale of w0 = 0.85613
-scale of w = 0.51114
-scale of W = 0.16791
+size is 500
+scale of w0 = 0.17123
+scale of w = 1.0223
+scale of W = 3.3583
 --- w_sparse_W_sparse ---
-scale of w0 = 1.2519
-scale of w = 0.48172
-scale of W = 0.16834
+size is 500
+scale of w0 = 0.25039
+scale of w = 0.96345
+scale of W = 3.3669
 --- w_sparse_W_sparse ---
-scale of w0 = 4.126
-scale of w = 0.49441
-scale of W = 0.1703
+size is 500
+scale of w0 = 0.8252
+scale of w = 0.98882
+scale of W = 3.406
 --- w_sparse_W_sparse ---
-scale of w0 = 4.8996
-scale of w = 0.48906
-scale of W = 0.16779
+size is 1000
+scale of w0 = 0.97993
+scale of w = 0.97812
+scale of W = 3.3558
 --- w_sparse_W_sparse ---
-scale of w0 = 4.9525
-scale of w = 0.52162
-scale of W = 0.16782
+size is 1000
+scale of w0 = 0.99051
+scale of w = 1.0432
+scale of W = 3.3564
 --- w_sparse_W_sparse ---
-scale of w0 = 2.8318
-scale of w = 0.5001
-scale of W = 0.16757
+size is 1000
+scale of w0 = 0.56636
+scale of w = 1.0002
+scale of W = 3.3515
 --- w_sparse_W_sparse ---
-scale of w0 = 4.2411
-scale of w = 0.49969
-scale of W = 0.16672
+size is 1000
+scale of w0 = 0.84821
+scale of w = 0.99939
+scale of W = 3.3345
 --- w_sparse_W_sparse ---
-scale of w0 = 1.2528
-scale of w = 0.5101
-scale of W = 0.16679
+size is 1000
+scale of w0 = 0.25056
+scale of w = 1.0202
+scale of W = 3.3359
 --- w_sparse_W_block ---
-scale of w0 = 4.8606
-scale of w = 0.53247
-scale of W = 0.27066
+size is 10
+scale of w0 = 0.97212
+scale of w = 1.0649
+scale of W = 5.4132
 --- w_sparse_W_block ---
-scale of w0 = 1.678
-scale of w = 0.44417
-scale of W = 0.20138
+size is 10
+scale of w0 = 0.3356
+scale of w = 0.88834
+scale of W = 4.0276
 --- w_sparse_W_block ---
-scale of w0 = 0.74153
-scale of w = 0.58068
-scale of W = 0.27466
+size is 10
+scale of w0 = 0.14831
+scale of w = 1.1614
+scale of W = 5.4931
 --- w_sparse_W_block ---
-scale of w0 = 3.4571
-scale of w = 0.56282
-scale of W = 0.2466
+size is 10
+scale of w0 = 0.69143
+scale of w = 1.1256
+scale of W = 4.932
 --- w_sparse_W_block ---
-scale of w0 = 3.1216
-scale of w = 0.43941
-scale of W = 0.26485
+size is 10
+scale of w0 = 0.62433
+scale of w = 0.87883
+scale of W = 5.297
 --- w_sparse_W_block ---
-scale of w0 = 2.8409
-scale of w = 0.49898
-scale of W = 0.25176
+size is 100
+scale of w0 = 0.56819
+scale of w = 0.99795
+scale of W = 5.0352
 --- w_sparse_W_block ---
-scale of w0 = 4.6115
-scale of w = 0.49928
-scale of W = 0.24615
+size is 100
+scale of w0 = 0.92231
+scale of w = 0.99857
+scale of W = 4.923
 --- w_sparse_W_block ---
-scale of w0 = 1.0512
-scale of w = 0.52654
-scale of W = 0.24815
+size is 100
+scale of w0 = 0.21023
+scale of w = 1.0531
+scale of W = 4.963
 --- w_sparse_W_block ---
-scale of w0 = 2.5932
-scale of w = 0.44844
-scale of W = 0.25661
+size is 100
+scale of w0 = 0.51864
+scale of w = 0.89688
+scale of W = 5.1322
 --- w_sparse_W_block ---
-scale of w0 = 3.1312
-scale of w = 0.52655
-scale of W = 0.24943
+size is 100
+scale of w0 = 0.62623
+scale of w = 1.0531
+scale of W = 4.9886
 --- w_sparse_W_block ---
-scale of w0 = 1.2545
-scale of w = 0.49312
-scale of W = 0.2507
+size is 500
+scale of w0 = 0.25089
+scale of w = 0.98623
+scale of W = 5.0141
 --- w_sparse_W_block ---
-scale of w0 = 4.839
-scale of w = 0.49087
-scale of W = 0.24968
+size is 500
+scale of w0 = 0.9678
+scale of w = 0.98174
+scale of W = 4.9935
 --- w_sparse_W_block ---
-scale of w0 = 4.3131
-scale of w = 0.47876
-scale of W = 0.2511
+size is 500
+scale of w0 = 0.86262
+scale of w = 0.95751
+scale of W = 5.022
 --- w_sparse_W_block ---
-scale of w0 = 2.2594
-scale of w = 0.51045
-scale of W = 0.25037
+size is 500
+scale of w0 = 0.45188
+scale of w = 1.0209
+scale of W = 5.0074
 --- w_sparse_W_block ---
-scale of w0 = 2.7049
-scale of w = 0.48742
-scale of W = 0.25067
+size is 500
+scale of w0 = 0.54097
+scale of w = 0.97483
+scale of W = 5.0135
 --- w_sparse_W_block ---
-scale of w0 = 1.9297
-scale of w = 0.51888
-scale of W = 0.24973
+size is 1000
+scale of w0 = 0.38595
+scale of w = 1.0378
+scale of W = 4.9945
 --- w_sparse_W_block ---
-scale of w0 = 2.5097
-scale of w = 0.51051
-scale of W = 0.24989
+size is 1000
+scale of w0 = 0.50194
+scale of w = 1.021
+scale of W = 4.9978
 --- w_sparse_W_block ---
-scale of w0 = 0.72723
-scale of w = 0.50281
-scale of W = 0.25042
+size is 1000
+scale of w0 = 0.14545
+scale of w = 1.0056
+scale of W = 5.0084
 --- w_sparse_W_block ---
-scale of w0 = 2.8002
-scale of w = 0.49389
-scale of W = 0.25053
+size is 1000
+scale of w0 = 0.56004
+scale of w = 0.98779
+scale of W = 5.0106
 --- w_sparse_W_block ---
-scale of w0 = 0.40324
-scale of w = 0.51471
-scale of W = 0.2509
+size is 1000
+scale of w0 = 0.080648
+scale of w = 1.0294
+scale of W = 5.0181
