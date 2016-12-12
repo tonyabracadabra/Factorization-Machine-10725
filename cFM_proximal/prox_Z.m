@@ -1,6 +1,6 @@
 function Z=prox_Z(Z,w,y,X,beta) 
     beta0=0.1;
-    f_pre=f2(y,X,w,Z,beta)
+    f_pre=f2(y,X,w,Z,beta);
     epsilon=1e-5;
     while true
         %proximal gradient descent in Z
@@ -19,6 +19,6 @@ function Z=prox_Z(Z,w,y,X,beta)
         if abs(f_pre-f2(y,X,w,Z,beta))<epsilon
             break
         end
-        f_pre=f2(y,X,w,Z,beta)
+        f_pre=f2(y,X,w,Z,beta);
     end
 end
