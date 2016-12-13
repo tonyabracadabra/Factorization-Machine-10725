@@ -4,20 +4,20 @@ function [ff,w,Z]=cFM_prox_initial_with_zeros(X,y,alpha,beta,epsilon, maxstep)
 	Z=zeros(p,p);
 	f_pre=f(y,X,w,Z,alpha,beta);
 
-	ff=[f_pre];
+	ff=[f_pre]
 	counter = 1;
 	while true && maxstep >= counter
 	    %gradient descent on w, 
 	    [ff1,w]=gradient_w(y,X,w,Z,alpha,beta);
-	    length(ff1)
+	    
 	    %proximal gradient on Z
 	    [ff2,Z]=prox_Z(Z,w,y,X,alpha,beta);
-	    length(ff2)
+
 	    %check
 	    if abs(f_pre-f(y,X,w,Z,alpha,beta))<epsilon
 	        break
 	    end
-	    f_pre=f(y,X,w,Z,alpha,beta);
+	    f_pre=f(y,X,w,Z,alpha,beta)
 	    ff=[ff,ff1,ff2];
 	    counter = counter + 1;
 	end
