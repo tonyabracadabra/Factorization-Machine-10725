@@ -1,4 +1,4 @@
-function [ff,w,Z]=cFM_prox(X,y,alpha,beta,epsilon, maxstep)
+function [ff,w,Z]=cFM_prox_initial_with_zeros(X,y,alpha,beta,epsilon, maxstep)
 	[n,p]=size(X);
 	w=zeros(p,1);
 	Z=zeros(p,p);
