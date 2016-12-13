@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  12 DEC 2016 23:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  12 DEC 2016 23:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1168,14 +1168,14 @@ File: images/argminW.png Graphic file (type png)
 
 <use images/argminW.png>
 Package pdftex.def Info: images/argminW.png used on input line 233.
-(pdftex.def)             Requested size: 138.2795pt x 113.40422pt.
+(pdftex.def)             Requested size: 110.62401pt x 90.72078pt.
 
 <images/argminw0wW.png, id=295, 538.01pt x 422.57875pt>
 File: images/argminw0wW.png Graphic file (type png)
 
 <use images/argminw0wW.png>
 Package pdftex.def Info: images/argminw0wW.png used on input line 233.
-(pdftex.def)             Requested size: 138.2795pt x 108.6105pt.
+(pdftex.def)             Requested size: 110.62401pt x 86.88712pt.
  [9
 
  <./images/argminW.png> <./images/argminw0wW.png>] <images/feasibility.png, id=
@@ -1184,13 +1184,13 @@ File: images/feasibility.png Graphic file (type png)
 
 <use images/feasibility.png>
 Package pdftex.def Info: images/feasibility.png used on input line 254.
-(pdftex.def)             Requested size: 107.55333pt x 86.7304pt.
+(pdftex.def)             Requested size: 110.62401pt x 89.20581pt.
 
 <images/subgrad.png, id=323, 495.8525pt x 399.4925pt>
 File: images/subgrad.png Graphic file (type png)
  <use images/subgrad.png>
 Package pdftex.def Info: images/subgrad.png used on input line 254.
-(pdftex.def)             Requested size: 107.55333pt x 86.65117pt.
+(pdftex.def)             Requested size: 110.62401pt x 89.12605pt.
 
 [10
 
@@ -1251,7 +1251,7 @@ texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
 exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/tex
 live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on slides.pdf (12 pages, 659312 bytes).
+Output written on slides.pdf (12 pages, 659667 bytes).
 PDF statistics:
  474 PDF objects out of 1000 (max. 8388607)
  422 compressed objects within 5 object streams
