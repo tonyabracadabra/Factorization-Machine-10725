@@ -2,7 +2,7 @@
 addpath(genpath('../cFM_proximal/'));
 addpath(genpath('../yanyu_code'));
 %% data - script_w_sparse_W_block & p = 10
-datatype_idx=1;
+datatype_idx=4;
 datatype_cell = {'w_sparse_W_block','w_sparse_W_lowrank_asym','w_sparse_W_lowrank_sym','w_sparse_W_sparse'};
 datatype=datatype_cell{datatype_idx};
 % nmethods = 3;
@@ -20,8 +20,7 @@ ii=1;
     % fid = fopen(['../results/', datatype, '_p', num2str(p), '.log'], 'w+');
     % fprintf(fid, '%s, %s, %s, %s, %s\n', 'method', 'train_mse', ...
     %     'train_var_ratio_to_truth', 'test_mse', 'test_var_ratio_to_truth');
-    % for i = 1 : 5
-        i=1;
+    for i = 1 : 5
         mymatname = ['../simulated_data/', datatype, '_p', num2str(p), '_', num2str(i)];
         load(mymatname);
         x = data{1};
@@ -78,9 +77,9 @@ ii=1;
         beta = 1;
         maxstep = 20 * 301;
         [ff, w, Z] = cFM_prox_initial_with_zeros(xtrain, ytrain, alpha, beta, epsilon, maxstep);
-        dlmwrite(['../results/', datatype, '_p', num2str(p),'_ff'],ff);
-        dlmwrite(['../results/', datatype, '_p', num2str(p),'_w'],w);
-        dlmwrite(['../results/', datatype, '_p', num2str(p),'_Z'],Z);
+        dlmwrite(['../results/', datatype, '_p', num2str(p),'_', num2str(i),'_ff'],ff);
+        dlmwrite(['../results/', datatype, '_p', num2str(p),'_', num2str(i),'_w'],w);
+        dlmwrite(['../results/', datatype, '_p', num2str(p),'_', num2str(i),'_Z'],Z);
         % ff_=dlmread(['../results/', datatype, '_p', num2str(p),'_ff']);
         % w_=dlmread(['../results/', datatype, '_p', num2str(p),'_w']);
         % Z_=dlmread(['../results/', datatype, '_p', num2str(p),'_Z']);
@@ -94,47 +93,6 @@ ii=1;
         % trainvarratio, testmse, testvarratio);
         % fclose(fid);  
         % END
-
-        % %plot
-        % function plot_result1(beta,beta0,epsilon,X,y)
-        % x1=X(:,1);x2=X(:,2);
-        % scatter(x1,x2,20,'k');
-        % hold on;
-        % xw11=X(intersect(find(epsilon>0.0001),find(y==1)),1);
-        % xw12=X(intersect(find(epsilon>0.0001),find(y==1)),2);
-        % xw21=X(intersect(find(epsilon>0.0001),find(y==-1)),1);
-        % xw22=X(intersect(find(epsilon>0.0001),find(y==-1)),2);
-        % scatter(xw11,xw12,20,'+');
-        % scatter(xw21,xw22,20,'*');
-        % x01 = linspace(-4,12);
-        % x02=-beta(1)/beta(2)*x01-beta0/beta(2);
-        % plot(x01,x02,'r');
-        % x02=-beta(1)/beta(2)*x01-(beta0-1)/beta(2);
-        % plot(x01,x02,'y');
-        % x02=-beta(1)/beta(2)*x01-(beta0+1)/beta(2);
-        % plot(x01,x02,'y');
-        % hold off;
-
-        % %legend
-        % x = -pi:pi/20:pi;
-        % y1 = sin(x);
-        % plot(x,y1)
-
-        % hold on
-        % y2 = cos(x);
-        % plot(x,y2,'--')
-        % hold off
-
-        % legend('sin(x)','cos(x)')
-
-        % %save figure
-        % bar(1:10)
-        % print('BarPlot','-dpng')
-
-
-
-
-
 
         
         % % cFM with sparsity 
@@ -163,7 +121,7 @@ ii=1;
         % fprintf(fid, '%s, %d, %d, %d, %d\n', 'cFM_sparse', trainmse, ...
         % trainvarratio, testmse, testvarratio);
         % fclose(fid);  
-    % end
+    end
 % end
         
     
