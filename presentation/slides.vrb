@@ -1,0 +1,9 @@
+\frametitle{Permutation Analysis}
+To answer "How significant is our dicovery based on such dataset?"
+\begin{exampleblock}{Permutation Analysis}
+\textbf{Step 1} Shuffling the samples' label (not replicates' label)\\
+\textbf{Step 2} Measure generalization error\\
+\textbf{Repeat 1 and 2}\\
+\textbf{Then} Get a distribution of generalization error\\
+P-value can be estimated as the frequency that error rate is smaller than the one computed from true labeling
+\end{exampleblock}
