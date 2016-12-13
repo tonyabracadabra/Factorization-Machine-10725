@@ -7,7 +7,7 @@
 % 'white'	'w'	[1 1 1]
 % 'black'	'k'	[0 0 0]
 
-datatype_idx=3;
+datatype_idx=1;
 datatype_cell = {'w_sparse_W_block','w_sparse_W_lowrank_asym','w_sparse_W_lowrank_sym','w_sparse_W_sparse'};
 datatype=datatype_cell{datatype_idx};
 
