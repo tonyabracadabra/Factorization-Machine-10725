@@ -1,9 +1,9 @@
-function [ff,w]=gradient_w(y,X,w,Z,alpha,beta)
+function [ff1,w]=gradient_w(y,X,w,Z,alpha,beta)
 	alpha0=0.5;
 	beta0=0.1;
 	epsilon=1e-3;
 	f_pre=f(y,X,w,Z,alpha,beta);
-	ff=[f_pre];
+	ff1=[f_pre];
 	while true
 		t=1;
 		grad_f1_=grad_f1(y,X,w,Z,alpha);
@@ -17,7 +17,7 @@ function [ff,w]=gradient_w(y,X,w,Z,alpha,beta)
 	        break
 	    end
 	    f_pre=f(y,X,w,Z,alpha,beta);
-	    ff=[ff,f_pre];
+	    ff1=[ff1,f_pre];
    	end
    	f_pre;
 end
