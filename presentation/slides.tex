@@ -110,12 +110,12 @@ Carnegie Mellon University \\ % Your institution for the title page
 \begin{frame}
 \titlepage % Print the title page as the first slide
 \end{frame}
-
+\addtocontents{toc}{\setcounter{tocdepth}{1}}
 \begin{frame}
-\begin{multicols}{2}
+% \begin{multicols}{2}
 \frametitle{Overview} % Table of contents slide, comment this block out to remove it
 \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
-\end{multicols}
+% \end{multicols}
 \end{frame}
 
 %----------------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ Carnegie Mellon University \\ % Your institution for the title page
     \begin{itemize}
     \item Two block coordinate descent to solve original convexFMs
       \item Propose ADMM method to sovle convexFMs with element-wise $l_1$ constraint
-      \item Overview optimization algorithm to solve classic FMs problems
+      \item Analyze performance of generalized FMs performance 
     \end{itemize}
   \end{frame}
 
