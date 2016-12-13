@@ -1,8 +1,9 @@
-function w=gradient_w(y,X,w,Z,alpha)
+function [ff,w]=gradient_w(y,X,w,Z,alpha,beta)
 	alpha0=0.5;
 	beta0=0.1;
-	epsilon=1e-5;
-	f_pre=f1(y,X,w,Z,alpha);
+	epsilon=1e-3;
+	f_pre=f(y,X,w,Z,alpha,beta);
+	ff=[f_pre];
 	while true
 		t=1;
 		grad_f1_=grad_f1(y,X,w,Z,alpha);
@@ -12,9 +13,11 @@ function w=gradient_w(y,X,w,Z,alpha)
 	    w=w-t*grad_f1(y,X,w,Z,alpha);
 
 	    %check
-	    if abs(f_pre-f1(y,X,w,Z,alpha))<epsilon
+	    if abs(f_pre-f(y,X,w,Z,alpha,beta))<epsilon
 	        break
 	    end
-	    f_pre=f1(y,X,w,Z,alpha);
+	    f_pre=f(y,X,w,Z,alpha,beta);
+	    ff=[ff,f_pre];
    	end
+   	f_pre
 end

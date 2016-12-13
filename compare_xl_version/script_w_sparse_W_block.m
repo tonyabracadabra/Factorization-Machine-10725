@@ -4,12 +4,12 @@ addpath(genpath('../yanyu_code'));
 %% data - script_w_sparse_W_block & p = 10
 datatype = 'w_sparse_W_block';
 % nmethods = 3;
-npool=1
+npool=1;
 
 pp=[10,100,500,1000];
-ii=1
+ii=1;
 % for ii=1:npool
-    p=pp[ii];
+    p=pp(ii);
     % test_mse = zeros(5,nmethods);
     % test_var_ratio_to_truth = zeros(5, methods);
     % train_mse = zeros(5,nmethods);
@@ -72,11 +72,11 @@ ii=1
         
         % cFM
         epsilon = 1e-3;
-        alpha = 1;
-        beta = 10;
+        alpha = 0.01;
+        beta = 1;
         maxstep = 20 * 301;
         [ff, w, Z] = cFM_prox_initial_with_zeros(xtrain, ytrain, alpha, beta, epsilon, maxstep);
-        plot(ff);
+        % plot(ff);
         % y_hat_grad_test = xtest * w + diag(xtest * Z * xtest');
         % y_hat_grad_train = xtrain * w + diag(xtrain * Z * xtrain');
         % [trainmse, trainvarratio] = give_me_measure(y_hat_grad_train, ytrain, vartrain);
