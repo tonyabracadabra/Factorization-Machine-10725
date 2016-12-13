@@ -12,7 +12,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
+% PACKAGES AND THEMES
 %----------------------------------------------------------------------------------------
 
 \documentclass{beamer}
@@ -89,7 +89,7 @@
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
 %----------------------------------------------------------------------------------------
-%	TITLE PAGE
+% TITLE PAGE
 %----------------------------------------------------------------------------------------
 
 \title[Algos for FMs]{Algorithms Associated with Factorization Machines} % The short title appears at the bottom of every slide, the full title is only on the title page
@@ -119,7 +119,7 @@ Carnegie Mellon University \\ % Your institution for the title page
 \end{frame}
 
 %----------------------------------------------------------------------------------------
-%	PRESENTATION SLIDES
+% PRESENTATION SLIDES
 %----------------------------------------------------------------------------------------
 
 %------------------------------------------------
@@ -152,10 +152,87 @@ Carnegie Mellon University \\ % Your institution for the title page
   \begin{frame}
   \frametitle{Our Goal}
     \begin{itemize}
+    \item Two block coordinate descent to solve original convexFMs
       \item Propose ADMM method to sovle convexFMs with element-wise $l_1$ constraint
       \item Overview optimization algorithm to solve classic FMs problems
     \end{itemize}
   \end{frame}
+
+%------------------------------------------------
+\section{Two Block Coordinate Descent for convexFMs} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+%------------------------------------------------
+\subsection{ConvexFMs}
+\begin{frame}
+\frametitle{ConvexFMs}
+\begin{itemize}
+  \item By introducing trace norm to FMs and substitude $V^TV$ with $W$, the problem becomes convex.
+  \item The formulation of convexFMs is:
+    \begin{align*}
+      \min_{w, W} & \sum_{i = 1}^n \underbrace{(y_i - w^Tx_i - x_i^T W x_i)^2}_{f(w, W)} \\
+      & + \lambda_1 \|W\|_{\text{tr}} + \lambda_2 \|w\|_2^2
+    \end{align*}
+\end{itemize}
+\end{frame}
+
+\subsection{Two Block Coordinate Descent}
+\begin{frame}
+\frametitle{Two Block Coordinate Descent}
+\begin{itemize}
+  \item convexFMs can be consider as two sub-problem:
+  \begin{align*}
+ \min_{w \in \mathbb{R}^{d}} \;
+\sum_{i = 1}^n 1/2(y_i-w^T x_i-\pi_i)^2 + \alpha /2 \|w\|_2^2,
+\end{align*}
+where $\pi_i=\langle W,x_i x_i^T\rangle$, and
+\begin{align*}
+ \min_{W \in \mathbb{S}^{d*d}} \;
+\sum_{i = 1}^n 1/2(y_i-w^T x_i-x_i^T W x_i)^2 + \beta\|W\|_{\text{tr}}
+\end{align*}
+  \item Alternatively perform gradient descent and proximal gradient descent on these problems respectively.
+\end{itemize}
+\end{frame}
+
+\subsection{Proximal Gradient Descent}
+\begin{frame}
+\frametitle{Proximal Gradient Descent}
+\begin{itemize}
+  \item Define proximal operator using matrix soft-thresholding: \begin{align*}
+prox_t(W^{+})=S_{\beta t}(W^{+})=U\Sigma_{\beta t} V^T
+\end{align*}
+where $W=U\Sigma V^T$ is a SVD, and $\Sigma_{\beta t}$ is diagonal matrix with $(\Sigma_{\beta t})_{ii}=\max\{\Sigma_{ii}-\beta t,0\}$.
+  \item Perform backtracking line search then update using $prox_t(W-t\nabla g(W))$, where $\nabla g(W)=-\sum_{i = 1}^n(y_i-w^T x_i-x_i^T W x_i)x_i x_i^T$.
+\end{itemize}
+\end{frame}
+
+\subsection{Two Block Coordinate Descent Results}
+\begin{frame}
+\frametitle{Two Block Coordinate Descent Results}
+% \begin{itemize}
+Convergence rate: W sym$>$W sparse$>$W asym$\approx$W block
+% \end{itemize}
+  \begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{w_sparse_W_lowrank_sym_p10_figure.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{w_sparse_W_lowrank_asym_p10_figure.png}
+  \end{minipage}
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{w_sparse_W_sparse_p10_figure.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=1\textwidth]{w_sparse_W_block_p10_figure.png}
+  \end{minipage}
+  \end{figure}
+\end{frame}
+
 
 %------------------------------------------------
 \section{ADMM for sparse convexFMs} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
@@ -235,7 +312,6 @@ Carnegie Mellon University \\ % Your institution for the title page
 \end{itemize}
 \end{frame}
 
-\subsection{ADMM Results (con'd)}
 \begin{frame}
 \frametitle{ADMM Results (con'd)}
 \begin{itemize}
@@ -261,7 +337,7 @@ Carnegie Mellon University \\ % Your institution for the title page
 \subsection{Problem formulation}
 \begin{frame}
 \frametitle{generalized Factorization Machine formulation}
-	
+  
 gFM proposed by \cite{lin2016non} removes several redundant constraints compared to the original FM, while its learning ability is kept. Reforming $\hat{y}$ in gFMs as follow:
 \begin{align*}
 \hat{y}=X^Tw^*+\mathcal{A}(U^TV)+\xi \label{eq:one_pass_gfm}
@@ -285,7 +361,7 @@ matrix sensing problem
 \subsection{One pass algorithm solving generalized Factorization Machine}
 \begin{frame}
 \frametitle{One pass algorithm solving generalized Factorization Machine}
-	\small \begin{algorithm}[H]
+  \small \begin{algorithm}[H]
  \caption{One pass algorithm solving}
  \label{algo:alm}
  \begin{algorithmic}[1]
@@ -323,7 +399,7 @@ matrix sensing problem
   \end{figure}
 \end{itemize}
 
-	
+  
 \end{frame}
 
 
