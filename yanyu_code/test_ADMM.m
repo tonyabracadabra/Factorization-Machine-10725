@@ -51,9 +51,9 @@ for i = 1 : 3
             u_init, rho, max_step, tol, debug, 3); % for coord-newton
 
 % 
-%     objs_coors{i} = objs_coor;
-%     objs_proxs{i} = objs_prox;
-%     objs_quasis{i} = objs_quasi;
+    objs_coors{i} = objs_coor;
+    objs_proxs{i} = objs_prox;
+    objs_quasis{i} = objs_quasi;
 %     figure;
 %     plot(objs_coor(:,2), log(objs_coor(:,1)), 'r');
 %     hold on;
