@@ -2,7 +2,9 @@
 addpath(genpath('../cFM_proximal/'));
 addpath(genpath('../yanyu_code'));
 %% data - script_w_sparse_W_block & p = 10
-datatype = 'w_sparse_W_block';
+datatype_idx=1;
+datatype_cell = {'w_sparse_W_block','w_sparse_W_lowrank_asym','w_sparse_W_lowrank_sym','w_sparse_W_sparse'};
+datatype=datatype_cell{datatype_idx};
 % nmethods = 3;
 npool=1;
 
@@ -76,6 +78,12 @@ ii=1;
         beta = 1;
         maxstep = 20 * 301;
         [ff, w, Z] = cFM_prox_initial_with_zeros(xtrain, ytrain, alpha, beta, epsilon, maxstep);
+        dlmwrite(['../results/', datatype, '_p', num2str(p),'_ff'],ff);
+        dlmwrite(['../results/', datatype, '_p', num2str(p),'_w'],w);
+        dlmwrite(['../results/', datatype, '_p', num2str(p),'_Z'],Z);
+        % ff_=dlmread(['../results/', datatype, '_p', num2str(p),'_ff']);
+        % w_=dlmread(['../results/', datatype, '_p', num2str(p),'_w']);
+        % Z_=dlmread(['../results/', datatype, '_p', num2str(p),'_Z']);
         % plot(ff);
         % y_hat_grad_test = xtest * w + diag(xtest * Z * xtest');
         % y_hat_grad_train = xtrain * w + diag(xtrain * Z * xtrain');

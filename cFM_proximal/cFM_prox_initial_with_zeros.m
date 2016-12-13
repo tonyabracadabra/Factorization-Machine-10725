@@ -2,7 +2,6 @@ function [ff,w,Z]=cFM_prox_initial_with_zeros(X,y,alpha,beta,epsilon, maxstep)
 	[n,p]=size(X);
 	w=zeros(p,1);
 	Z=zeros(p,p);
-	111
 	f_pre=f(y,X,w,Z,alpha,beta)
 
 	ff=[f_pre];

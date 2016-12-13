@@ -19,5 +19,5 @@ function [ff,w]=gradient_w(y,X,w,Z,alpha,beta)
 	    f_pre=f(y,X,w,Z,alpha,beta);
 	    ff=[ff,f_pre];
    	end
-   	f_pre
+   	f_pre;
 end

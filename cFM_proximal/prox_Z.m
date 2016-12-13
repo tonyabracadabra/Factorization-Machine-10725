@@ -23,5 +23,5 @@ function [ff,Z]=prox_Z(Z,w,y,X,alpha,beta)
         f_pre=f(y,X,w,Z,alpha,beta);
         ff=[ff,f_pre];
     end
-    f_pre
+    f_pre;
 end
