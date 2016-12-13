@@ -18,8 +18,10 @@ p=pp(ii);
 
 hold on
 for i=1:5
+	i=2
 	ff=dlmread(['../results/', datatype, '_p', num2str(p),'_', num2str(i),'_ff']);
-	plot(log(ff),color{i});
+	ff=log(ff);
+	plot(ff,color{i});
 	% legend();
 end
 title(datatype);
