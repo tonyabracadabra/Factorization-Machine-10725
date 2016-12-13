@@ -1,0 +1,13 @@
+\BOOKMARK [2][]{Outline0.1}{Our Problem}{}% 1
+\BOOKMARK [3][]{Outline0.1.1.3}{Factorization Machines}{Outline0.1}% 2
+\BOOKMARK [3][]{Outline0.1.2.4}{Other Formulation}{Outline0.1}% 3
+\BOOKMARK [3][]{Outline0.1.3.5}{Our Work}{Outline0.1}% 4
+\BOOKMARK [2][]{Outline0.2}{ADMM for sparse convexFMs}{}% 5
+\BOOKMARK [3][]{Outline0.2.1.6}{ConvexFMs with l1 constraint}{Outline0.2}% 6
+\BOOKMARK [3][]{Outline0.2.2.7}{ADMM Formulation}{Outline0.2}% 7
+\BOOKMARK [3][]{Outline0.2.3.8}{ADMM Subproblem}{Outline0.2}% 8
+\BOOKMARK [3][]{Outline0.2.4.9}{ADMM Results}{Outline0.2}% 9
+\BOOKMARK [3][]{Outline0.2.5.10}{ADMM Results \(con'd\)}{Outline0.2}% 10
+\BOOKMARK [2][]{Outline0.3}{Generalized Factorization Machine}{}% 11
+\BOOKMARK [3][]{Outline0.3.1.11}{Problem formulation}{Outline0.3}% 12
+\BOOKMARK [3][]{Outline0.3.2.12}{One pass algorithm solving generalized Factorization Machine}{Outline0.3}% 13

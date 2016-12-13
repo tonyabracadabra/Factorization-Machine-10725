@@ -23,6 +23,9 @@
 \usepackage{multicol}
 \usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
 \usetikzlibrary{positioning}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage{algorithmic}
+
 \mode<presentation> {
 
 % The Beamer class comes with a number of default slide themes
@@ -253,6 +256,66 @@ Carnegie Mellon University \\ % Your institution for the title page
 \end{itemize}
 \end{frame}
 
+
+\section{Generalized Factorization Machine}
+\subsection{Problem formulation}
+\begin{frame}
+\frametitle{generalized Factorization Machine formulation}
+%\begin{itemize}
+%  \item 
+%\end{itemize}
+
+	
+gFM proposed by \cite{lin2016non} removes several redundant constraints compared to the original FM, while its learning ability is kept. Reforming $\hat{y}$ in gFMs as follow:
+\begin{align*}
+\hat{y}=X^Tw^*+\mathcal{A}(U^TV)+\xi \label{eq:one_pass_gfm}
+\end{align*}
+
+\end{frame}
+
+\subsection{One pass algorithm solving generalized Factorization Machine}
+\begin{frame}
+\frametitle{One pass algorithm solving generalized Factorization Machine}
+	\small \begin{algorithm}[H]
+ \caption{One pass algorithm solving}
+ \label{algo:alm}
+ \begin{algorithmic}[1]
+ \ENSURE $\mathit{w}^{(T)}, \mathit{U}^{(T)}, \mathit{V}^{(T)}$
+ \STATE Initialize: $\mathit{w}^{(0)}=0, \mathit{V}^{(0)}=0. \mathit{U}^{(0)}=\mathrm{SVD}\left(H_1^{0}-\frac{1}{2}h_2^{(0)}I,k\right)$
+    \FOR{$t=1,2,\cdots,T$}
+     \STATE Retrieve $x^{(T)}=[x_{(t-1)n+1},\cdots,x_{(t-1)n+n}]$. Define $\mathcal{A}(M) \overset{\Delta}{=} \left[{X_i^{(t)}}^TMX_i^{(t)}\right]$
+     \STATE $\hat{U}^{(t)}=\left(H_1^{(t-1)}-\frac{1}{2}h_2^{(t-1)}I+{M^{(t-1)}}^TU^{(t-1)}\right)$
+     \STATE Orthogonalize $\hat{U}^{(t)}$ via QR decomposition: $U^{(t)}=QR(\hat{U}^{(t)})$  
+     \STATE $\mathit{w}^{(t)}=\mathit{h}_3^{(t-1)}+\mathit{w}^{(t-1)}$
+     \STATE $\mathit{V}^{t}=(\mathit{H}_1^{(t-1)}-\frac{1}{2}h_2^{(t-1)}I+\mathit{M}^{(t-1)})\mathit{U}^{(t)}$
+    \ENDFOR
+\STATE \textbf{Output:} $\mathit{w}^{(T)},\mathit{U}^{(T)},\mathit{V}^{(T)}$
+ \end{algorithmic}
+\end{algorithm}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Result}
+\begin{itemize}
+  \item Fine tune the rank $k$ in order to have a better convergence rate
+  \item Higher learning rate might cause the algorithm unable to learn or even increased error rate
+  \begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=.9\textwidth]{images/gfm/w_sparse_W_block_p_100.png}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=.9\textwidth]{images/gfm/w_sparse_W_lowrank_sym_p_100.png}
+  \end{minipage}
+  \end{figure}
+\end{itemize}
+
+	
+\end{frame}
 
 
 %------------------------------------------------
