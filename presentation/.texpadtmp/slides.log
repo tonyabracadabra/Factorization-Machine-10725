@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.4)  13 DEC 2016 00:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.9.4)  13 DEC 2016 01:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -955,24 +955,24 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 ] [8
 
-] <images/argminW.png, id=307, 518.93875pt x 425.59pt>
+] <images/argminW.png, id=314, 518.93875pt x 425.59pt>
 File: images/argminW.png Graphic file (type png)
  <use images/argminW.png>
 Package pdftex.def Info: images/argminW.png used on input line 236.
 (pdftex.def)             Requested size: 110.62401pt x 90.72078pt.
- <images/argminw0wW.png, id=309, 538.01pt x 422.57875pt>
+ <images/argminw0wW.png, id=316, 538.01pt x 422.57875pt>
 File: images/argminw0wW.png Graphic file (type png)
  <use images/argminw0wW.png>
 Package pdftex.def Info: images/argminw0wW.png used on input line 236.
 (pdftex.def)             Requested size: 110.62401pt x 86.88712pt.
  [9
 
- <./images/argminW.png> <./images/argminw0wW.png>] <images/feasibility.png, id=336, 565.11125pt x 455.7025pt>
+ <./images/argminW.png> <./images/argminw0wW.png>] <images/feasibility.png, id=343, 565.11125pt x 455.7025pt>
 File: images/feasibility.png Graphic file (type png)
  <use images/feasibility.png>
 Package pdftex.def Info: images/feasibility.png used on input line 257.
 (pdftex.def)             Requested size: 110.62401pt x 89.20581pt.
- <images/subgrad.png, id=337, 495.8525pt x 399.4925pt>
+ <images/subgrad.png, id=344, 495.8525pt x 399.4925pt>
 File: images/subgrad.png Graphic file (type png)
  <use images/subgrad.png>
 Package pdftex.def Info: images/subgrad.png used on input line 257.
@@ -981,31 +981,43 @@ Package pdftex.def Info: images/subgrad.png used on input line 257.
 
  <./images/feasibility.png> <./images/subgrad.png>]
 
-LaTeX Warning: Citation `lin2016non' on page 11 undefined on input line 274.
+LaTeX Warning: Citation `lin2016non' on page 11 undefined on input line 270.
 
 [11
 
 ]
-Overfull \vbox (6.5796pt too high) detected at line 295
+Missing character: There is no â in font cmss8!
+Missing character: There is no ˆ in font cmss10!
+Missing character: There is no — in font cmss10!
+Missing character: There is no â in font cmss8!
+Missing character: There is no ˆ in font cmss10!
+Missing character: There is no — in font cmss10!
+Missing character: There is no â in font cmss8!
+Missing character: There is no ˆ in font cmss10!
+Missing character: There is no — in font cmss10!
+ [12
+
+]
+Overfull \vbox (6.5796pt too high) detected at line 304
  []
 
-[12
+[13
 
-] <images/gfm/w_sparse_W_block_p_100.png, id=418, 433.62pt x 289.08pt>
+] <images/gfm/w_sparse_W_block_p_100.png, id=450, 433.62pt x 289.08pt>
 File: images/gfm/w_sparse_W_block_p_100.png Graphic file (type png)
  <use images/gfm/w_sparse_W_block_p_100.png>
-Package pdftex.def Info: images/gfm/w_sparse_W_block_p_100.png used on input line 318.
+Package pdftex.def Info: images/gfm/w_sparse_W_block_p_100.png used on input line 327.
 (pdftex.def)             Requested size: 124.4507pt x 82.96649pt.
- <images/gfm/w_sparse_W_lowrank_sym_p_100.png, id=419, 433.62pt x 289.08pt>
+ <images/gfm/w_sparse_W_lowrank_sym_p_100.png, id=451, 433.62pt x 289.08pt>
 File: images/gfm/w_sparse_W_lowrank_sym_p_100.png Graphic file (type png)
  <use images/gfm/w_sparse_W_lowrank_sym_p_100.png>
-Package pdftex.def Info: images/gfm/w_sparse_W_lowrank_sym_p_100.png used on input line 318.
+Package pdftex.def Info: images/gfm/w_sparse_W_lowrank_sym_p_100.png used on input line 327.
 (pdftex.def)             Requested size: 124.4507pt x 82.96649pt.
- [13
+ [14
 
- <./images/gfm/w_sparse_W_block_p_100.png> <./images/gfm/w_sparse_W_lowrank_sym_p_100.png>] (/Volumes/TONY/Convex Optimization/project/Factorization-Machine-10725/presentation/.texpadtmp/slides.bbl) [14
+ <./images/gfm/w_sparse_W_block_p_100.png> <./images/gfm/w_sparse_W_lowrank_sym_p_100.png>] (/Volumes/TONY/Convex Optimization/project/Factorization-Machine-10725/presentation/.texpadtmp/slides.bbl) [15
 
-] [15
+] [16
 
 ]
 \tf@nav=\write6
@@ -1017,11 +1029,11 @@ Package pdftex.def Info: images/gfm/w_sparse_W_lowrank_sym_p_100.png used on inp
 \tf@snm=\write8
 \openout8 = `slides.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 337.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 337.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 346.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 346.
  (/Volumes/TONY/Convex Optimization/project/Factorization-Machine-10725/presentation/.texpadtmp/slides.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 337.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 337.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 346.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 346.
 Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 657BD92EEBB3E523D296B03758F1A204;640.
 
@@ -1035,21 +1047,21 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 337.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 346.
  ) 
 Here is how much of TeX's memory you used:
- 20858 strings out of 494447
- 423970 string characters out of 6166767
+ 20866 strings out of 494447
+ 424053 string characters out of 6166767
  478522 words of memory out of 5000000
- 23632 multiletter control sequences out of 15000+600000
+ 23637 multiletter control sequences out of 15000+600000
  16838 words of font info for 63 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  48i,16n,69p,407b,583s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "/Volumes/TONY/Convex Optimization/project/Factorization-Machine-10725/presentation/.texpadtmp/slides.pdf" (15 pages, 711245 bytes).
+Output written on "/Volumes/TONY/Convex Optimization/project/Factorization-Machine-10725/presentation/.texpadtmp/slides.pdf" (16 pages, 713227 bytes).
 PDF statistics:
- 569 PDF objects out of 1000 (max. 8388607)
- 510 compressed objects within 6 object streams
- 46 named destinations out of 1000 (max. 500000)
- 177 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 601 PDF objects out of 1000 (max. 8388607)
+ 541 compressed objects within 6 object streams
+ 49 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

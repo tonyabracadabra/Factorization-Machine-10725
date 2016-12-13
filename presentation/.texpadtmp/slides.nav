@@ -39,17 +39,20 @@
 \headcommand {\beamer@subsectionentry {0}{3}{1}{11}{Problem formulation}}\headcommand {\beamer@subsectionpages {11}{10}}
 \headcommand {\slideentry {3}{1}{1}{11/11}{Problem formulation}{0}}
 \headcommand {\beamer@framepages {11}{11}}
-\headcommand {\beamer@subsectionentry {0}{3}{2}{12}{One pass algorithm solving generalized Factorization Machine}}\headcommand {\beamer@subsectionpages {11}{11}}
-\headcommand {\slideentry {3}{2}{1}{12/12}{One pass algorithm solving generalized Factorization Machine}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{12}{generalized Factorization Machine formulation con'd}}\headcommand {\beamer@subsectionpages {11}{11}}
+\headcommand {\slideentry {3}{2}{1}{12/12}{generalized Factorization Machine formulation con'd}{0}}
 \headcommand {\beamer@framepages {12}{12}}
-\headcommand {\slideentry {3}{2}{2}{13/13}{One pass algorithm solving generalized Factorization Machine}{0}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{13}{One pass algorithm solving generalized Factorization Machine}}\headcommand {\beamer@subsectionpages {12}{12}}
+\headcommand {\slideentry {3}{3}{1}{13/13}{One pass algorithm solving generalized Factorization Machine}{0}}
 \headcommand {\beamer@framepages {13}{13}}
-\headcommand {\slideentry {3}{2}{3}{14/14}{One pass algorithm solving generalized Factorization Machine}{0}}
+\headcommand {\slideentry {3}{3}{2}{14/14}{One pass algorithm solving generalized Factorization Machine}{0}}
 \headcommand {\beamer@framepages {14}{14}}
-\headcommand {\slideentry {3}{2}{4}{15/15}{One pass algorithm solving generalized Factorization Machine}{0}}
+\headcommand {\slideentry {3}{3}{3}{15/15}{One pass algorithm solving generalized Factorization Machine}{0}}
 \headcommand {\beamer@framepages {15}{15}}
-\headcommand {\beamer@partpages {1}{15}}
-\headcommand {\beamer@subsectionpages {12}{15}}
-\headcommand {\beamer@sectionpages {11}{15}}
-\headcommand {\beamer@documentpages {15}}
-\headcommand {\def \inserttotalframenumber {15}}
+\headcommand {\slideentry {3}{3}{4}{16/16}{One pass algorithm solving generalized Factorization Machine}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\beamer@partpages {1}{16}}
+\headcommand {\beamer@subsectionpages {13}{16}}
+\headcommand {\beamer@sectionpages {11}{16}}
+\headcommand {\beamer@documentpages {16}}
+\headcommand {\def \inserttotalframenumber {16}}

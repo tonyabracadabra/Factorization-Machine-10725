@@ -261,10 +261,6 @@ Carnegie Mellon University \\ % Your institution for the title page
 \subsection{Problem formulation}
 \begin{frame}
 \frametitle{generalized Factorization Machine formulation}
-%\begin{itemize}
-%  \item 
-%\end{itemize}
-
 	
 gFM proposed by \cite{lin2016non} removes several redundant constraints compared to the original FM, while its learning ability is kept. Reforming $\hat{y}$ in gFMs as follow:
 \begin{align*}
@@ -272,6 +268,19 @@ gFM proposed by \cite{lin2016non} removes several redundant constraints compared
 \end{align*}
 
 \end{frame}
+
+\subsection{generalized Factorization Machine formulation con'd}
+\begin{frame}
+\frametitle{generalized Factorization Machine formulation con'd}
+
+\begin{itemize}
+\item When $w^∗$ = 0, gFM is equal to the symmetric rank-one
+matrix sensing problem
+\item When $w^∗ \neq 0$, the gFM has an extra perturbation term $X^Tw^∗$.
+\end{itemize}
+
+\end{frame}
+
 
 \subsection{One pass algorithm solving generalized Factorization Machine}
 \begin{frame}

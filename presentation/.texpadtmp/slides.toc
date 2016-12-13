@@ -11,4 +11,5 @@
 \beamer@subsectionintoc {2}{5}{ADMM Results (con'd)}{10}{0}{2}
 \beamer@sectionintoc {3}{Generalized Factorization Machine}{11}{0}{3}
 \beamer@subsectionintoc {3}{1}{Problem formulation}{11}{0}{3}
-\beamer@subsectionintoc {3}{2}{One pass algorithm solving generalized Factorization Machine}{12}{0}{3}
+\beamer@subsectionintoc {3}{2}{generalized Factorization Machine formulation con'd}{12}{0}{3}
+\beamer@subsectionintoc {3}{3}{One pass algorithm solving generalized Factorization Machine}{13}{0}{3}
