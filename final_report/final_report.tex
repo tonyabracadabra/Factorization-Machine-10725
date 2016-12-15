@@ -459,6 +459,10 @@ The learning rate, as used to describe the algorithm of gFM, differs from the le
 \subsection{sparse cFMs}
 
 \subsection{gFM}
+By running the algorithm from \cite{generalizedFM_paper}, we observed interesting result that by estimating each parameter in an alternative manner does not necessarily provide us a sequence of descent objective values, and by fine tuning hyper-parameters like rank $k$, learning rate, the resulting objective values vary significantly. 
+
+By incorporating different structural information in $W$ for our simulated data, gFM also behaves differently. Specifically, when $W$ is assumed to be sparse, the objective values explodes linearly, while under the same hyper-parameters, linear convergence could be achieved by those other three simulated data. This is probably because sparse $W$ affects the tolerance of higher learning rate of this algorithm, under which the algorithm may fail to converge and the objective values will explode.
+
 Generally, generalized factorization machine and its associated algorithm bridges the theoretical gap between the matrix sensing problem and the factorization machine. The problem it deals with is naturally non-convex which means the conventional gradient descent framework can hardly achieve a global convergence. It is proved that the algorithm they proposed can achieve a linear convergence rate and it is also shown in our experiment. However, we found it to be highly sensitive to hyper-parameters such as learning rate and the rank $k$ before applying this algorithm, which makes it somewhat impractical in a real world setting.
 
 
