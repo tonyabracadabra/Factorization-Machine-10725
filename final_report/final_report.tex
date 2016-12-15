@@ -115,7 +115,7 @@ The goal of the project is to explore the optimization method for cFMs, and gFMs
   \text{, where} \quad \hat{y} &= w_0 + w^T x + x^T W x \quad\text{(cFMs)} \nonumber\\
   \hat{y} &= w_0 + w^T x + x^T U^TV x \quad\text{(gFMs)} \nonumber
 \end{align}
-In cFMs problem, we implemented a blockwise coordinate descent approach for solving the same objective (\cref{eq:criteria1}) as \cite{convexFM_paper} proposed. Beyond that, we introduced an additional regularizer $\|\vecc(W)\|_1$ to the problem (\cref{eq:criteria2}) and solved it using ADMM approach. 
+In cFMs problem, we implemented a blockwise coordinate descent approach for solving the same objective (\cref{eq:criteria1}) as \cite{convexFM_paper} proposed. Beyond that, we introduced an additional regularizer $\|\vecc(W)\|_1$ to the original problem (see \cref{eq:criteria2}) and solved it using ADMM approach. 
 \begin{align}
   L(w_0, w, W) &= f(w_0, w, W) + \lambda_1 \|W\|_{\tr} + \lambda_3 \|w\|_2^2 \label{eq:criteria1} \\
   L(w_0, w, W) &= f(w_0, w, W) + \lambda_1 \|W\|_{\tr} + \lambda_2 \|\vecc(W)\|_1 + \lambda_3 \|w\|_2^2 \label{eq:criteria2} 
@@ -127,7 +127,7 @@ For gFMs, we applied the algorithm proposed in \cite{generalizedFM_paper} and an
 In this section, we describe the algorithms we used in details. \Cref{sec:cfm} introduces the proximal gradient descent for solving cFMs with trace norm constraint on $W$. \Cref{sec:admm} introduces the ADMM approach for solving cFMs with both trace norm and element-wise $l_1$ norm constraints.
 
 
-\subsection{Solving cFMs by proximal gradient descent} \label{sec:cfm}
+\subsection{Solving cFMs by two-block coordinate descent} \label{sec:cfm}
 
 To solve cFMs in the form of \cref{eq:criteria1}, we can re-form it in the following way:
 \begin{equation}
@@ -150,7 +150,7 @@ where $\pi_i=\langle W,x_i x_i^T\rangle$, and
 Alternatively perform standard method on \cref{eq:ridge} and greedy coordinate descent on \cref{eq:proximal} until convergence will get optimal solution $w$ and $W$.
 Similarly, we also perform the two-block descent algorithm. But the difference from \cite{convexFM_paper} is that, instead of greedy coordinate descent, here we solve \cref{eq:proximal} using proximal gradient descent. As for solving \cref{eq:ridge}, we consider it as solving a standard ridge regression problem.
 We choose just perform gradient descent: let \cref{eq:ridge} be $f_1(w)$, then
-$\nabla f_1(w)=-X'(y-diag(XZX')-Xw)+\alpha w$. So the gradient update is $w^+=w-t\nabla f_1(w)$. Thus, we get our standard ridge solver with respect to $w$.
+$\nabla f_1(w)=-X'(y-diag(XZX')-Xw)+\alpha w$. So the gradient update is $w^+=w-t\nabla f_1(w)$. Thus, we get our gradient descent ridge solver with respect to $w$.
 Then we consider solve \cref{eq:proximal} using proximal gradient descent. \cref{eq:proximal} can be written as $g(W)+h(W)$, where $g(W)=\sum_{i = 1}^n 1/2(y_i-w^T x_i-x_i^T W x_i)^2$ and
 $h(W)=\beta\|W\|_{\text{tr}}$. Then we have
 $$\nabla g(W)=-\sum_{i = 1}^n(y_i-w^T x_i-x_i^T W x_i)x_i x_i^T$$.
@@ -197,7 +197,7 @@ Then the ADMM iterations can be summarized as follow:
     \end{align*}
 \end{enumerate}
 
-The second step can be solved exactly using matrix soft-thresholding operator as described before. But there is no closed form solution for the first subproblem. To solve the first problem numerically, we applied two strategies: i) proximal gradient descent on $w_0, w, W$; ii) blockwise coordinate descent on $w_0, w$ and $W$ respectively, namely:
+The second step can be solved exactly using matrix soft-thresholding operator as described before. But there is no closed form solution for the first subproblem. To solve the first step numerically, we applied two strategies: i) proximal gradient descent on $w_0, w, W$; ii) blockwise coordinate descent on $w_0, w$ and $W$ respectively, namely:
 \begin{align}
   w_0, w &= \arg\min_{w0, w} f(w_0, w, W) + \lambda_3 \|w\|_2^2 \label{eq:subw0w} \\
   W &= \arg\min_W f(w_0, w, W) + \lambda_2 \|\vecc(W)\|_1 + \frac{\rho}{2} \|W - Z + u\|_F^2 \label{eq:subW}
@@ -277,7 +277,7 @@ After several trials, based on our computing capacity, we found the proper featu
     \centering
     \includegraphics[width=1\textwidth]{images/xin_block}
   \end{minipage}
-  \caption{cFMs: The convergences of two algorithms on four types of simulated data (left to right: SYM, ASYM, SPARSE, BLOCK)}
+  \caption{cFMs: The convergences of two-block coordinate descent on four types of simulated data (left to right: SYM, ASYM, SPARSE, BLOCK)}
   \label{fig:cfm_figs}
 \end{figure}
 
@@ -305,7 +305,7 @@ We first compare the performance of proximal gradient and quasi-Newton method on
     \centering
     \includegraphics[width=1\textwidth]{../yanyu_code/plots/block_p30}
   \end{minipage}
-  \caption{sparse cFMs (solve \cref{eq:subW}): The convergences of two algorithms on four types of simulated data (left to right: SYM, ASYM, SPARSE, BLOCK)}
+  \caption{sparse cFMs (solve \cref{eq:subW}): The convergences of the two algorithms on four types of simulated data (left to right: SYM, ASYM, SPARSE, BLOCK)}
   \label{fig:argminW_curve}
 \end{figure}
 From the results we can see, Quasi-Newton is almost always outperforms first-order method in the sense that it can achieve the same results with fewer iterations, but the performance also depends on the property of the data. Furthermore, from the convergence curve we can see, if we stop the algorithm early, in SYM and BLOCK data, Quasi-Newton gives roughly the same result as proximal. Such results may result from the fact that in these data, the initial point is fairly far from the true optimizer.
@@ -332,7 +332,7 @@ Then we compared the performance of the following three algorithms in solving th
     \centering
     \includegraphics[width=1\textwidth]{../yanyu_code/plots/block_w0wW_curve_p30}
   \end{minipage}
-  \caption{sparse cFMs (solve ADMM step1): The convergences of two algorithms on four types of simulated data (left to right: SYM, ASYM, SPARSE, BLOCK)}
+  \caption{sparse cFMs (solve ADMM step1): The convergences of the three algorithms on four types of simulated data (left to right: SYM, ASYM, SPARSE, BLOCK)}
   \label{fig:argminw0wW_curve}
 \end{figure}
 \begin{figure}[htbp]
@@ -356,7 +356,7 @@ Then we compared the performance of the following three algorithms in solving th
     \centering
     \includegraphics[width=1\textwidth]{../yanyu_code/plots/block_w0wW_box_p30}
   \end{minipage}
-  \caption{sparse cFMs (solve ADMM step1): The percentage of $W$ updates in total updates for updating $w0, w, W$ (left to right: SYM, ASYM, SPARSE, BLOCK)}
+  \caption{sparse cFMs (solve ADMM step1): The percentage of $W$ updates in total updates for updating $w0, w, W$ in blockwise coordinate descent algorithms (left to right: SYM, ASYM, SPARSE, BLOCK)}
   \label{fig:argminw0wW_ratio}
 \end{figure}
 From the results we can see, solving \cref{eq:subW} used most of the updates, and it is reasonable since \cref{eq:subW} is a much bigger problem comparing to solving \cref{eq:subw0w}. Furthermore, proximal seems to be the most efficient algorithm in this problem. It converges quickly and always stops somewhere close to the optimum, whereas the blockwise coordinate descent may not converge to the right answer. The reason why coordinate descent algorithm get stuck at some point may result from the fact that inner problem is not solved inexactly. Moreover, coord-quasiNewton works than coord-proximal, which is consistent with the previous results. 
@@ -366,26 +366,26 @@ By applying the above three approaches as a subroutine in ADMM, the performance 
   \centering
   \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=.6\textwidth]{../yanyu_code/plots/sym_ADMM_obj_p30}
+    \includegraphics[width=.7\textwidth]{../yanyu_code/plots/sym_ADMM_obj_p30}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=.6\textwidth]{../yanyu_code/plots/sparse_ADMM_obj_p30}
+    \includegraphics[width=.7\textwidth]{../yanyu_code/plots/sparse_ADMM_obj_p30}
   \end{minipage}
-  \caption{sparse cFMs (ADMM): The convergences of two algorithms on four types of simulated data (left to right: SYM, SPARSE)}
+  \caption{sparse cFMs (ADMM): The convergences of three ADMMs on four types of simulated data (left to right: SYM, SPARSE)}
   \label{fig:admm}
 \end{figure}
 \begin{figure}[ht!]
   \centering
   \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=.6\textwidth]{../yanyu_code/plots/sym_ADMM_feasibility_p30}
+    \includegraphics[width=.65\textwidth]{../yanyu_code/plots/sym_ADMM_feasibility_p30}
   \end{minipage}
   \hfill
   \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=.6\textwidth]{../yanyu_code/plots/sparse_ADMM_feasibility_p30}
+    \includegraphics[width=.65\textwidth]{../yanyu_code/plots/sparse_ADMM_feasibility_p30}
   \end{minipage}
   \caption{sparse cFMs (ADMM): The decrease of $\|Z-W\|_F^2$ along ADMM iterations (left to right: SYM, SPARSE, y-axis is $\log(\|Z-W\|_F^2 / p^2)$)}
   \label{fig:feas}
@@ -448,7 +448,7 @@ The comparison is made with the same amount of updades. At the very first step, 
 
 By running the methods proposed by \cite{generalizedFM_paper} (see \Cref{fig:gfm}), we observed that when gFM is dealing with $W$ that has a sparse structure, the error rate on the training data explodes, probably because its updating through the sequence of estimation does not necessarily require the error change in a descent manner.
 
-Similarly, choosing the rank $k$ of the training data as close to the original rank $k$ in is important. As it determines the initialization of $U$ in the algorithm described, estimating $k$ by a large number would almost certainly cause the error rate explodes. The updating rule used in this algorithm is highly sensitive to apriori knowledge about the structure though it can't be easily estimated without certain domain knowledges.
+Similarly, choosing the rank $k$ of the training data as close to the original rank $k$ is important. As it determines the initialization of $U$ in the algorithm described, estimating $k$ by a large number would almost certainly cause the error rate explodes. The updating rule used in this algorithm is highly sensitive to apriori knowledge about the structure though it can't be easily estimated without certain domain knowledges.
 
 The learning rate, as used to describe the algorithm of gFM, differs from the learning rate we know from algorithms we familiar with from the first order or second order algorithms. Instead, they use learning rate here to denote the degree a single estimation can learn. We tried setting up different learning rate and found that within a certain small window of learning rate, the error rate can decrease linearly with a considerable rate, while with a slightly larger learning rate, linearly increased error rate can be observed.
 
