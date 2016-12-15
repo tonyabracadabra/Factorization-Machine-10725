@@ -1,3 +1,4 @@
+
 \documentclass{article}
 
 % if you need to pass options to natbib, use, e.g.:
@@ -452,28 +453,6 @@ Similarly, choosing the rank $k$ of the training data as close to the original r
 The learning rate, as used to describe the algorithm of gFM, differs from the learning rate we know from algorithms we familiar with from the first order or second order algorithms. Instead, they use learning rate here to denote the degree a single estimation can learn. We tried setting up different learning rate and found that within a certain small window of learning rate, the error rate can decrease linearly with a considerable rate, while with a slightly larger learning rate, linearly increased error rate can be observed.
 
 \section{Discussion}
-<<<<<<< HEAD
-\subsection{cFMs}
-
-\subsection{sparse cFMs}
-
-\subsection{gFM}
-By running the algorithm from \cite{generalizedFM_paper}, we observed interesting result that by estimating each parameter in an alternative manner does not necessarily provide us a sequence of descent objective values, and by fine tuning hyper-parameters like rank $k$, learning rate, the resulting objective values vary significantly. 
-
-By incorporating different structural information in $W$ for our simulated data, gFM also behaves differently. Specifically, when $W$ is assumed to be sparse, the objective values explodes linearly, while under the same hyper-parameters, linear convergence could be achieved by those other three simulated data. This is probably because sparse $W$ affects the tolerance of higher learning rate of this algorithm, under which the algorithm may fail to converge and the objective values will explode.
-
-Generally, generalized factorization machine and its associated algorithm bridges the theoretical gap between the matrix sensing problem and the factorization machine. The problem it deals with is naturally non-convex which means the conventional gradient descent framework can hardly achieve a global convergence. It is proved that the algorithm they proposed can achieve a linear convergence rate and it is also shown in our experiment. However, we found it to be highly sensitive to hyper-parameters such as learning rate and the rank $k$ before applying this algorithm, which makes it somewhat impractical in a real world setting.
-
-
-\section*{References}
-\small{
-\renewcommand{\section}[2]{}%
-\bibliography{myref} 
-\bibliographystyle{IEEEtranN}
-}
-
-\end{document}
-=======
 
 By replacing greedy coordinate descent algorithms in \cite{convexFM_paper} with proximal gradient descent, we must incorporate SVD, which require much more computing capacity when dealing with large scale matrix. In addition, “one and two stage convergence” and the different convergence rates of each data type still remain mysterious, which leaves a potential interesting theoretical research topic to dive into. We may discover some potential performence improvement space of proximal gradient descent for matrix completion problems.
 
@@ -481,7 +460,7 @@ The motivation to introduce sparsity constraint on $W$ is that in real world app
 
 Regarding the implementation of ADMM approach, the most time consuming step is to update $w_0, w, W$ since there is no analytical solution. It is the bottleneck for applying the ADMM approach to large-scale problem and it is necessary to develop more sophisticated framework to solve it efficiently, such as second-order method, to use screening techniques to reduce the size of the problem before solving, to construct solution path with warm starts.
 
-For gFMs, generally speaking, its formuation and its associated algorithm bridges the theoretical gap between the matrix sensing problem and the factorization machine. The problem it deals with is naturally non-convex which means the conventional gradient descent framework can hardly achieve a global convergence. It is proved that the algorithm they proposed can achieve a linear convergence rate and it is also shown in our experiment. However, we found it to be highly sensitive to hyper-parameters such as learning rate and the rank $k$ before applying this algorithm, which makes it somewhat impractical in a real world setting.
+For gFMs, generally speaking, its formuation and its associated algorithm bridges the theoretical gap between the matrix sensing problem and the factorization machine. By incorporating different structural information in $W$ for our simulated data, gFM also behaves differently. Specifically, when $W$ is assumed to be sparse, the objective values explodes linearly, while under the same hyper-parameters, linear convergence could be achieved by those other three simulated data. This is probably because sparse $W$ affects the tolerance of higher learning rate of this algorithm, under which the algorithm may fail to converge and the objective values will explode. It is proved that the algorithm they proposed can achieve a linear convergence rate and it is also shown in our experiment. However, we found it to be highly sensitive to hyper-parameters such as learning rate and the rank $k$ before applying this algorithm, which makes it somewhat impractical in a real world setting.
 
 
 \section*{References}
@@ -492,4 +471,3 @@ For gFMs, generally speaking, its formuation and its associated algorithm bridge
 }
 
 \end{document}
->>>>>>> beea05f7a058cb0f24c22d69ecd65b5345b696f0

@@ -1,0 +1,28 @@
+\begin{thebibliography}{BFU15}
+
+\bibitem[AG07]{andrew2007scalable}
+Galen Andrew and Jianfeng Gao.
+\newblock Scalable training of l 1-regularized log-linear models.
+\newblock In {\em Proceedings of the 24th international conference on Machine
+  learning}, pages 33--40. ACM, 2007.
+
+\bibitem[BFU15]{convexFM_paper}
+Mathieu Blondel, Akinori Fujino, and Naonori Ueda.
+\newblock Convex factorization machines.
+\newblock In {\em Joint European Conference on Machine Learning and Knowledge
+  Discovery in Databases}, pages 19--35. Springer, 2015.
+
+\bibitem[LY16]{generalizedFM_paper}
+Ming Lin and Jieping Ye.
+\newblock A non-convex one-pass framework for generalized factorization machine
+  and rank-one matrix sensing.
+\newblock In {\em Advances In Neural Information Processing Systems}, pages
+  1633--1641, 2016.
+
+\bibitem[Ren10]{FM_paper}
+S.~Rendle.
+\newblock Factorization machines.
+\newblock In {\em 2010 IEEE International Conference on Data Mining}, pages
+  995--1000, Dec 2010.
+
+\end{thebibliography}
