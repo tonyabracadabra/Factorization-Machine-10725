@@ -254,7 +254,7 @@ In this section, we show the results of our algorithms running on simulated data
 
 After several trials, based on our computing capacity, we found the proper feature dimension we are able to use for testing convexFMs is 10.
 
-\Cref{fig:cfm_figs} shows the convergence rate of four data types. The order of the convergence rate is as follows: SYM$>$SPARSE$>$ASYM$\approx$BLOCK. Particularly, symmetric and sparse converge much more faster than asymmetric and block. Another interesting observation we want to point out is that, symmetric and sparse converge in a form we called "one stage convergence": objective value dramatically drop down at the first several iteration, then it almost don't quite drop much. As for, asymmetric and block, they perform like "two stage convergence", the first step is similar to one stage version, but there is another objective value drop down stage, but the speed is slower than the first one.
+\Cref{fig:cfm_figs} shows the convergence rate of four data types. The order of convergence rates are as follows: SYM$>$SPARSE$>$ASYM$\approx$BLOCK. Particularly, symmetric and sparse converge much faster than asymmetric and block. Another interesting observation we want to point out is that, symmetric and sparse converge in a form we called "one stage convergence": objective value dramatically drop down at the first several iterations, then it almost don't quite drop much. As for asymmetric and block, they perform like "two stage convergence": the first step is similar to one stage version, but there is another objective value drop down stage, but the speed is slower than the first one.
 \begin{figure}[htbp]
   \centering
   \begin{minipage}{0.24\textwidth}
