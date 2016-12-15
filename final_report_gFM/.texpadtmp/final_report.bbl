@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{libact}
+Pool-based active learning in python, 2016.
+
+\bibitem{cawley2011baseline}
+Gavin~C Cawley.
+\newblock Baseline methods for active learning.
+\newblock In {\em Active Learning and Experimental Design@ AISTATS}, pages
+  47--57, 2011.
+
+\bibitem{chen2016xgboost}
+Tianqi Chen and Carlos Guestrin.
+\newblock Xgboost: A scalable tree boosting system.
+\newblock {\em arXiv preprint arXiv:1603.02754}, 2016.
+
+\bibitem{hamilton2009statistical}
+Nicholas~A Hamilton, Jack~TH Wang, Markus~C Kerr, and Rohan~D Teasdale.
+\newblock Statistical and visual differentiation of subcellular imaging.
+\newblock {\em BMC bioinformatics}, 10(1):1, 2009.
+
+\bibitem{hsu2015active}
+Wei-Ning Hsu and Hsuan-Tien Lin.
+\newblock Active learning by learning.
+\newblock In {\em AAAI}, pages 2659--2665, 2015.
+
+\bibitem{lewis1994heterogeneous}
+David~D Lewis and Jason Catlett.
+\newblock Heterogeneous uncertainty sampling for supervised learning.
+\newblock In {\em Proceedings of the eleventh international conference on
+  machine learning}, pages 148--156, 1994.
+
+\bibitem{settles2010active}
+Burr Settles.
+\newblock Active learning literature survey.
+\newblock {\em University of Wisconsin, Madison}, 52(55-66):11, 2010.
+
+\end{thebibliography}

@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{asgari2015continuous}
+Ehsaneddin Asgari and Mohammad~RK Mofrad.
+\newblock Continuous distributed representation of biological sequences for
+  deep proteomics and genomics.
+\newblock {\em PloS one}, 10(11):e0141287, 2015.
+
+\bibitem{aydin2006protein}
+Zafer Aydin, Yucel Altunbasak, and Mark Borodovsky.
+\newblock Protein secondary structure prediction for a single-sequence using
+  hidden semi-markov models.
+\newblock {\em BMC bioinformatics}, 7(1):1, 2006.
+
+\bibitem{burer2012non}
+Samuel Burer and Adam~N Letchford.
+\newblock Non-convex mixed-integer nonlinear programming: a survey.
+\newblock {\em Surveys in Operations Research and Management Science},
+  17(2):97--106, 2012.
+
+\bibitem{chen2016deeplab}
+Liang-Chieh Chen, George Papandreou, Iasonas Kokkinos, Kevin Murphy, and Alan~L
+  Yuille.
+\newblock Deeplab: Semantic image segmentation with deep convolutional nets,
+  atrous convolution, and fully connected crfs.
+\newblock {\em arXiv preprint arXiv:1606.00915}, 2016.
+
+\bibitem{long2015fully}
+Jonathan Long, Evan Shelhamer, and Trevor Darrell.
+\newblock Fully convolutional networks for semantic segmentation.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 3431--3440, 2015.
+
+\bibitem{sonderby2014protein}
+S{\o}ren~Kaae S{\o}nderby and Ole Winther.
+\newblock Protein secondary structure prediction with long short term memory
+  networks.
+\newblock {\em arXiv preprint arXiv:1412.7828}, 2014.
+
+\bibitem{zhou2014deep}
+Jian Zhou and Olga~G Troyanskaya.
+\newblock Deep supervised and convolutional generative stochastic network for
+  protein secondary structure prediction.
+\newblock In {\em ICML}, pages 745--753, 2014.
+
+\end{thebibliography}

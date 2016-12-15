@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Related Works}{}% 2
+\BOOKMARK [1][-]{section.3}{Dataset}{}% 3
+\BOOKMARK [1][-]{section.4}{Method}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Full Convolutional Network}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{LSTM}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{Conditional Random Field}{section.4}% 7
+\BOOKMARK [1][-]{section.5}{Result}{}% 8
+\BOOKMARK [2][-]{subsection.5.1}{Full Convolutional Network}{section.5}% 9
+\BOOKMARK [2][-]{subsection.5.2}{Conditional Random Field}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.3}{LSTM}{section.5}% 11
+\BOOKMARK [1][-]{section.6}{Future Works}{}% 12
+\BOOKMARK [2][-]{subsection.6.1}{Integrating rounding in the training of CNN model}{section.6}% 13
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Integer programming}{subsection.6.1}% 14
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Approximating the rounding function with differentiable functions}{subsection.6.1}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Fine tuning with Conditional Random Field with Full convolutional Network}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.3}{Extend our algorithms to datasets like ProVec}{section.6}% 17
