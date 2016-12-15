@@ -91,14 +91,9 @@
 
 \maketitle
 
-% \begin{abstract}
-%   The abstract paragraph should be indented \nicefrac{1}{2}~inch
-%   (3~picas) on both the left- and right-hand margins. Use 10~point
-%   type, with a vertical spacing (leading) of 11~points.  The word
-%   \textbf{Abstract} must be centered, bold, and in point size 12. Two
-%   line spaces precede the abstract. The abstract must be limited to
-%   one paragraph.
-% \end{abstract}
+\begin{abstract}
+  Factorization machines (FMs) is widely used in recommendation system and it models the interaction between features by projecting $x \in \mathbb{R}^{p}$ onto the column space of $V \in \mathbb{R}^{k \times p}$. With the fact that $k < p$, it overcomes overfitting by limiting the second-order interaction term to be a low rank matrix. Based on FMs, researchers have proposed two extensions: i) convex FMs; ii) generalized FMs. In this report, we proposed and implemented two-block coordinate descent method with proximal gradient as subroutine for solving the original form of convex FMs proposed by \cite{convexFM_paper}. Beyond that, we extended convex FMs by introducing an element-wise sparsity constraint on interaction matrix, and we proposed and implemented an ADMM approach to solve this problem. Finally, we did empirical analysis on the performance of the algorithm proposed by \cite{generalizedFM_paper} for solving generalized FMs.
+\end{abstract}
 
 \section{Background}
 
